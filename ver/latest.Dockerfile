@@ -6,7 +6,7 @@ LABEL org.label-schema.license="MIT" \
 
 ARG JULIA_VERSION
 
-ENV JULIA_VERSION=${JULIA_VERSION:-1.4.2} \
+ENV JULIA_VERSION=${JULIA_VERSION:-1.5.0} \
     JULIA_PATH=/opt/julia \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
@@ -28,7 +28,7 @@ RUN apt-get update \
   && mkdir ${JULIA_PATH} \
   && cd /tmp \
   && curl -sLO https://julialang-s3.julialang.org/bin/linux/x64/`echo ${JULIA_VERSION} | cut -d. -f 1,2`/julia-${JULIA_VERSION}-linux-x86_64.tar.gz \
-  && echo "d77311be23260710e89700d0b1113eecf421d6cf31a9cebad3f6bdd606165c28 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - \
+  && echo "be7af676f8474afce098861275d28a0eb8a4ece3f83a11027e3554dcdecddb91 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - \
   && tar xzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz -C ${JULIA_PATH} --strip-components=1 \
   ## Clean up
   && rm -rf /tmp/* \
