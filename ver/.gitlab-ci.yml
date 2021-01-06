@@ -1,7 +1,7 @@
 .before-script-build: &before-script-build
   - |
-    if [[ ! -z "$CI_BUILDX_PLATFORMS" ]]; then
-      export OS_ARCH=`echo $CI_BUILDX_PLATFORMS | tr ',' '\n' | \
+    if [[ ! -z "$CI_BUILD_PLATFORMS" ]]; then
+      export OS_ARCH=`echo $CI_BUILD_PLATFORMS | tr ' ' '\n' | \
       sed 's|\/||2' | sed 's|\/|-|' | tr '\n' ' '`
     fi
   - |
@@ -33,77 +33,69 @@
   before_script:
     - *before-script-build
 
-buildx:latest-linux-amd64:
+build:latest-linux-amd64:
   extends: .build
   tags:
+    - arch:amd64
     - os:linux
   script:
-    - docker context create tls-environment
-    - docker buildx create --name multiarch-builder --use tls-environment
     - >
-      docker buildx build --pull --push
-      --platform linux/amd64
-      -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
+      docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
       -t $CI_APP_REPO:$VERSION_MAJ_MIN_PAT-linux-amd64
       -t $CI_APP_REPO:$VERSION_MAJ_MIN-linux-amd64
       -t $CI_APP_REPO:$VERSION_MAJ-linux-amd64
       -f ver/$CI_APP_TAG.Dockerfile .
+    - docker push -a $CI_APP_REPO
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" && $CI_BUILDX_PLATFORMS =~ /(linux\/amd64)/
+    - if: $CI_COMMIT_BRANCH == "master" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
       changes:
         - ver/latest.Dockerfile
 
-buildx:latest-linux-arm64v8:
+build:latest-linux-arm64v8:
   extends: .build
   tags:
+    - arch:arm64/v8
     - os:linux
   script:
-    - docker context create tls-environment
-    - docker buildx create --name multiarch-builder --use tls-environment
     - >
-      docker buildx build --pull --push
-      --platform linux/arm64/v8
-      -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
+      docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
       -t $CI_APP_REPO:$VERSION_MAJ_MIN_PAT-linux-arm64v8
       -t $CI_APP_REPO:$VERSION_MAJ_MIN-linux-arm64v8
       -t $CI_APP_REPO:$VERSION_MAJ-linux-arm64v8
       -f ver/$CI_APP_TAG.Dockerfile .
+    - docker push -a $CI_APP_REPO
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" && $CI_BUILDX_PLATFORMS =~ /(linux\/arm64\/v8)/
+    - if: $CI_COMMIT_BRANCH == "master" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
       changes:
         - ver/latest.Dockerfile
 
-buildx:version-linux-amd64:
+build:version-linux-amd64:
   extends: .build
   tags:
+    - arch:amd64
     - os:linux
   script:
-    - docker context create tls-environment
-    - docker buildx create --name multiarch-builder --use tls-environment
     - >
-      docker buildx build --pull --push
-      --platform linux/amd64
-      -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
+      docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
       -f ver/$CI_APP_TAG.Dockerfile .
+    - docker push -a $CI_APP_REPO
   rules:
-    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_BUILDX_PLATFORMS =~ /(linux\/amd64)/
+    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
       changes:
         - ver/1.5.2.Dockerfile
 
-buildx:version-linux-arm64v8:
+build:version-linux-arm64v8:
   extends: .build
   tags:
+    - arch:arm64/v8
     - os:linux
   script:
-    - docker context create tls-environment
-    - docker buildx create --name multiarch-builder --use tls-environment
     - >
-      docker buildx build --pull --push
-      --platform linux/arm64/v8
-      -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
+      docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
       -f ver/$CI_APP_TAG.Dockerfile .
+    - docker push -a $CI_APP_REPO
   rules:
-    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_BUILDX_PLATFORMS =~ /(linux\/arm64\/v8)/
+    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
       changes:
         - ver/1.5.2.Dockerfile
 
