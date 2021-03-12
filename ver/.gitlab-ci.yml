@@ -54,7 +54,7 @@ build:latest-linux-amd64:
   rules:
     - if: $CI_COMMIT_BRANCH == "master" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
       changes:
-        - ver/$CI_APP_TAG.Dockerfile
+        - ver/latest.Dockerfile
 
 build:latest-linux-arm64v8:
   extends: .build
@@ -72,7 +72,7 @@ build:latest-linux-arm64v8:
   rules:
     - if: $CI_COMMIT_BRANCH == "master" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
       changes:
-        - ver/$CI_APP_TAG.Dockerfile
+        - ver/latest.Dockerfile
 
 build:version-linux-amd64:
   extends: .build
@@ -87,7 +87,7 @@ build:version-linux-amd64:
   rules:
     - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
       changes:
-        - ver/$CI_APP_TAG.Dockerfile
+        - ver/1.5.3.Dockerfile
 
 build:version-linux-arm64v8:
   extends: .build
@@ -102,7 +102,7 @@ build:version-linux-arm64v8:
   rules:
     - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
       changes:
-        - ver/$CI_APP_TAG.Dockerfile
+        - ver/1.5.3.Dockerfile
 
 build-manifest:latest-linux-multiarch:
   extends: .build
@@ -127,7 +127,7 @@ build-manifest:latest-linux-multiarch:
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
       changes:
-        - ver/$CI_APP_TAG.Dockerfile
+        - ver/latest.Dockerfile
 
 build-manifest:version-linux-multiarch:
   extends: .build
@@ -143,4 +143,4 @@ build-manifest:version-linux-multiarch:
   rules:
     - if: $CI_COMMIT_BRANCH == "freeze-version"
       changes:
-        - ver/$CI_APP_TAG.Dockerfile
+        - ver/1.5.3.Dockerfile
