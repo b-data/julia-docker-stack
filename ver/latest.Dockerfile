@@ -6,7 +6,7 @@ LABEL org.label-schema.license="MIT" \
 
 ARG JULIA_VERSION
 
-ENV JULIA_VERSION=${JULIA_VERSION:-1.5.4} \
+ENV JULIA_VERSION=${JULIA_VERSION:-1.6.0} \
     JULIA_PATH=/opt/julia \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
@@ -29,11 +29,11 @@ RUN apt-get update \
   && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
     # amd64
-    amd64) tarArch='x86_64'; dirArch='x64'; sha256='80dec351d1a593e8ad152636971a48d0c81bfcfab92c87f3604663616f1e8bc5' ;; \
+    amd64) tarArch='x86_64'; dirArch='x64'; sha256='463b71dc70ca7094c0e0fd6d55d130051a7901e8dec5eb44d6002c57d1bd8585' ;; \
     # arm64v8
-    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='7ffdf6358d6c2b8a53757e517998d55833c363d4730c9452ddd44b223f10333a' ;; \
+    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='0f496972d26cea88151204d03e6bd87702aa1ff983de3b1e4f320c48ef67325f' ;; \
     # i386
-    i386) tarArch='i686'; dirArch='x86'; sha256='70f7327a26dd2dda87eb6cdf99269f974ae722a02c54b2faa174ceda125bf006' ;; \
+    i386) tarArch='i686'; dirArch='x86'; sha256='601fea2ece89df4398146d077ee456a9abe0c9d2f19c5fc22be1f01c77949777' ;; \
     *) echo >&2 "error: current architecture ($dpkgArch) does not have a corresponding Julia binary release"; exit 1 ;; \
 	esac \
   && folder="$(echo "$JULIA_VERSION" | cut -d. -f1-2)" \
