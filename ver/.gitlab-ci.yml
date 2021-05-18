@@ -114,6 +114,10 @@ build-manifest:latest-linux-multiarch:
       done
     - >    
       docker manifest create $CI_APP_REPO:$CI_APP_TAG $CI_MANIFEST_LIST
+      && if [[ $OS_ARCH =~ "linux-arm64v8" ]] ; then
+        docker manifest annotate --variant v8 $CI_APP_REPO:$CI_APP_TAG \
+          $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
+      fi
       && docker manifest push $CI_APP_REPO:$CI_APP_TAG
 
       docker manifest create $CI_APP_REPO:$VERSION_MAJ_MIN_PAT $CI_MANIFEST_LIST
