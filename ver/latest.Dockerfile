@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 LABEL org.label-schema.license="MIT" \
       org.label-schema.vcs-url="https://gitlab.b-data.ch/julia/docker-stack" \
@@ -17,8 +17,6 @@ RUN apt-get update \
     bash-completion \
     ca-certificates \
     curl \
-    #fonts-texgyre \
-    #gsfonts \
     locales \
     unzip \
     zip \
