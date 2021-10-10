@@ -1,16 +1,17 @@
 FROM debian:bullseye
 
-LABEL org.label-schema.license="MIT" \
-      org.label-schema.vcs-url="https://gitlab.b-data.ch/julia/docker-stack" \
-      maintainer="Olivier Benz <olivier.benz@b-data.ch>"
+LABEL org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.source="https://gitlab.b-data.ch/julia/docker-stack" \
+      org.opencontainers.image.vendor="b-data GmbH" \
+      org.opencontainers.image.authors="Olivier Benz <olivier.benz@b-data.ch>"
 
 ARG JULIA_VERSION
 
 ENV JULIA_VERSION=${JULIA_VERSION:-1.6.3} \
     JULIA_PATH=/opt/julia \
-    LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    TERM=xterm
+    TERM=xterm \
+    TZ=Etc/UTC
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -20,9 +21,9 @@ RUN apt-get update \
     locales \
     unzip \
     zip \
-  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-  && locale-gen en_US.utf8 \
-  && /usr/sbin/update-locale LANG=en_US.UTF-8 \
+  && sed -i "s/# $LANG/$LANG/g" /etc/locale.gen \
+  && locale-gen \
+  && update-locale LANG=$LANG \
   && cd /tmp \
   && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
