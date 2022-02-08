@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.licenses="MIT" \
 
 ARG JULIA_VERSION
 
-ENV JULIA_VERSION=${JULIA_VERSION:-1.7.1} \
+ENV JULIA_VERSION=${JULIA_VERSION:-1.7.2} \
     JULIA_PATH=/opt/julia \
     LANG=en_US.UTF-8 \
     TERM=xterm \
@@ -28,11 +28,11 @@ RUN apt-get update \
   && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
     # amd64
-    amd64) tarArch='x86_64'; dirArch='x64'; sha256='44658e9c7b45e2b9b5b59239d190cca42de05c175ea86bc346c294a8fe8d9f11' ;; \
+    amd64) tarArch='x86_64'; dirArch='x64'; sha256='a75244724f3b2de0e7249c861fbf64078257c16fb4203be78f1cf4dd5973ba95' ;; \
     # arm64v8
-    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='5d9f23916d331f54a2bb68936c2c7fbf3fdb4a6f7bfbb99750276cc23a292a4d' ;; \
+    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='69fd58b1e8f6f8a72053dcbeab2d2882258fe372a91c7287d38b9c217885821a' ;; \
     # i386
-    i386) tarArch='i686'; dirArch='x86'; sha256='6b5f7a235dc51b586d6ab914042b6d91c8634eeeb011636460ab6dcbf5671fac' ;; \
+    i386) tarArch='i686'; dirArch='x86'; sha256='f5f8e6cbaf0acd473a5e13c23c80f0672207eb86408178fec221f4f7fb88f6d1' ;; \
     *) echo >&2 "error: current architecture ($dpkgArch) does not have a corresponding Julia binary release"; exit 1 ;; \
 	esac \
   && folder="$(echo "$JULIA_VERSION" | cut -d. -f1-2)" \
