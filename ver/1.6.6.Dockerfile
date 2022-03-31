@@ -28,11 +28,11 @@ RUN apt-get update \
   && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
     # amd64
-    amd64) tarArch='x86_64'; dirArch='x64'; sha256='a75244724f3b2de0e7249c861fbf64078257c16fb4203be78f1cf4dd5973ba95' ;; \
+    amd64) tarArch='x86_64'; dirArch='x64'; sha256='c25ff71a4242207ab2681a0fcc5df50014e9d99f814e77cacbc5027e20514945' ;; \
     # arm64v8
-    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='69fd58b1e8f6f8a72053dcbeab2d2882258fe372a91c7287d38b9c217885821a' ;; \
+    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='1a14efd793dbfeb7d2f16f95f253aa402984560daed7cc325efd098026002a25' ;; \
     # i386
-    i386) tarArch='i686'; dirArch='x86'; sha256='f5f8e6cbaf0acd473a5e13c23c80f0672207eb86408178fec221f4f7fb88f6d1' ;; \
+    i386) tarArch='i686'; dirArch='x86'; sha256='c624346ea341af380793f2f7e0f92857f97b247ef54d048fc27f254a570bdb83' ;; \
     *) echo >&2 "error: current architecture ($dpkgArch) does not have a corresponding Julia binary release"; exit 1 ;; \
 	esac \
   && folder="$(echo "$JULIA_VERSION" | cut -d. -f1-2)" \
