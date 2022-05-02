@@ -39,7 +39,7 @@ RUN apt-get update \
   && curl -fL -o julia.tar.gz "https://julialang-s3.julialang.org/bin/linux/${dirArch}/${folder}/julia-${JULIA_VERSION}-linux-${tarArch}.tar.gz" \
   && echo "${sha256} *julia.tar.gz" | sha256sum -c - \
   && mkdir ${JULIA_PATH} \
-  && tar -xzf julia.tar.gz -C ${JULIA_PATH} --strip-components=1 \
+  && tar -xzf julia.tar.gz -C ${JULIA_PATH} --no-same-owner --strip-components=1 \
   ## Clean up
   && rm -rf /tmp/* \
   && rm -rf /var/lib/apt/lists/*
