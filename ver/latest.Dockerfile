@@ -16,9 +16,11 @@ ENV JULIA_VERSION=${JULIA_VERSION:-1.7.3} \
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     bash-completion \
+    build-essential \
     ca-certificates \
     curl \
     locales \
+    netbase \
     unzip \
     zip \
   && sed -i "s/# $LANG/$LANG/g" /etc/locale.gen \
