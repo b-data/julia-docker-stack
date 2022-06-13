@@ -46,9 +46,9 @@ build:latest-linux-amd64:
     - os:linux
   script:
     - >
-      docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
+      cd base && docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
       -t $CI_APP_REPO:$VERSION_MAJ_MIN_PAT-linux-amd64
-      -f base/$CI_APP_TAG.Dockerfile .
+      -f $CI_APP_TAG.Dockerfile .
     - docker push -a $CI_APP_REPO
   rules:
     - if: $CI_COMMIT_BRANCH == "master" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
@@ -62,9 +62,9 @@ build:latest-linux-arm64v8:
     - os:linux
   script:
     - >
-      docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
+      cd base && docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
       -t $CI_APP_REPO:$VERSION_MAJ_MIN_PAT-linux-arm64v8
-      -f base/$CI_APP_TAG.Dockerfile .
+      -f $CI_APP_TAG.Dockerfile .
     - docker push -a $CI_APP_REPO
   rules:
     - if: $CI_COMMIT_BRANCH == "master" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
@@ -78,8 +78,8 @@ build:version-linux-amd64:
     - os:linux
   script:
     - >
-      docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
-      -f base/$CI_APP_TAG.Dockerfile .
+      cd base && docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
+      -f $CI_APP_TAG.Dockerfile .
     - docker push $CI_APP_REPO:$CI_APP_TAG-linux-amd64
   rules:
     - if: $CI_COMMIT_BRANCH == "freeze-version" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
@@ -93,8 +93,8 @@ build:version-linux-arm64v8:
     - os:linux
   script:
     - >
-      docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
-      -f base/$CI_APP_TAG.Dockerfile .
+      cd base && docker build -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
+      -f $CI_APP_TAG.Dockerfile .
     - docker push $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
   rules:
     - if: $CI_COMMIT_BRANCH == "freeze-version" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
