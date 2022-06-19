@@ -110,7 +110,8 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
 ## Install Julia related stuff
 RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
   ## Install Revise
-  && julia -e "using Pkg; pkg\"add Revise\"; pkg\"precompile\"" \
+  && julia -e 'using Pkg; Pkg.add("Revise"); Pkg.precompile()' \
+  && julia -e 'using Pkg; Pkg.add(readdir("$(ENV["JULIA_DEPOT_PATH"])/packages"))' \
   && chmod -R ugo+rx ${JULIA_DEPOT_PATH}
 
 ## Copy files as late as possible to avoid cache busting
