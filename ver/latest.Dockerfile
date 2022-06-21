@@ -1,6 +1,6 @@
 ARG BASE_IMAGE=debian:bullseye
 ARG BLAS=libopenblas-dev
-ARG JULIA_VERSION=1.7.3
+ARG JULIA_VERSION
 
 FROM ${BASE_IMAGE}
 
