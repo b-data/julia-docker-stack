@@ -1,6 +1,6 @@
 ARG BASE_IMAGE=debian:bullseye
 ARG JULIA_VERSION
-ARG GIT_VERSION=2.37.1
+ARG GIT_VERSION=2.37.2
 ARG GIT_LFS_VERSION=3.2.0
 ARG PANDOC_VERSION=2.18
 
@@ -51,10 +51,8 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
     gnupg \
     htop \
     info \
-    inkscape \
     jq \
     libclang-dev \
-    lsb-release \
     man-db \
     nano \
     procps \

@@ -34,6 +34,7 @@
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: "/certs"
     JULIA_VERSION: "1.7.3"
+    UPDATE_MODE: "false"
   before_script:
     - *before-script-build
 
@@ -48,12 +49,12 @@ build:latest-linux-amd64:
       --build-arg JULIA_VERSION
       -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
       -t $CI_APP_REPO:$VERSION_MAJ_MIN_PAT-linux-amd64
-      -f ver/latest.Dockerfile .
+      -f pubtools/latest.Dockerfile .
     - docker push -a $CI_APP_REPO
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
+    - if: $CI_COMMIT_BRANCH == "master" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
       changes:
-        - ver/latest.Dockerfile
+        - pubtools/latest.Dockerfile
 
 build:latest-linux-arm64v8:
   extends: .build
@@ -66,12 +67,12 @@ build:latest-linux-arm64v8:
       --build-arg JULIA_VERSION
       -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
       -t $CI_APP_REPO:$VERSION_MAJ_MIN_PAT-linux-arm64v8
-      -f ver/latest.Dockerfile .
+      -f pubtools/latest.Dockerfile .
     - docker push -a $CI_APP_REPO
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
+    - if: $CI_COMMIT_BRANCH == "master" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
       changes:
-        - ver/latest.Dockerfile
+        - pubtools/latest.Dockerfile
 
 build:version-linux-amd64:
   extends: .build
@@ -82,12 +83,12 @@ build:version-linux-amd64:
     - >
       docker build --pull
       -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
-      -f ver/$JULIA_VERSION.Dockerfile .
+      -f pubtools/$JULIA_VERSION.Dockerfile .
     - docker push $CI_APP_REPO:$CI_APP_TAG-linux-amd64
   rules:
-    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
+    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_PIPELINE_TRIGGERED && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
       changes:
-        - ver/$JULIA_VERSION.Dockerfile
+        - pubtools/$JULIA_VERSION.Dockerfile
 
 build:version-linux-arm64v8:
   extends: .build
@@ -98,12 +99,12 @@ build:version-linux-arm64v8:
     - >
       docker build --pull
       -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
-      -f ver/$JULIA_VERSION.Dockerfile .
+      -f pubtools/$JULIA_VERSION.Dockerfile .
     - docker push $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
   rules:
-    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
+    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_PIPELINE_TRIGGERED && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
       changes:
-        - ver/$JULIA_VERSION.Dockerfile
+        - pubtools/$JULIA_VERSION.Dockerfile
 
 build-manifest:latest-linux-multiarch:
   extends: .build
@@ -142,9 +143,9 @@ build-manifest:latest-linux-multiarch:
       fi
       docker manifest push $CI_APP_REPO:$VERSION_MAJ
   rules:
-    - if: $CI_COMMIT_BRANCH == "master"
+    - if: $CI_COMMIT_BRANCH == "master" && $UPDATE_MODE != "true"
       changes:
-        - ver/latest.Dockerfile
+        - pubtools/latest.Dockerfile
 
 build-manifest:version-linux-multiarch:
   extends: .build
@@ -162,32 +163,6 @@ build-manifest:version-linux-multiarch:
       fi
       docker manifest push $CI_APP_REPO:$CI_APP_TAG
   rules:
-    - if: $CI_COMMIT_BRANCH == "freeze-version"
+    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_PIPELINE_TRIGGERED
       changes:
-        - ver/$JULIA_VERSION.Dockerfile
-
-trigger-latest-build:
-  extends: .build
-  stage: .post
-  before_script:
-    - apk upgrade --no-cache
-    - apk add --update --no-cache curl
-  script:
-    - curl -X POST -F token=$JULIA_BASE -F ref=master https://gitlab.b-data.ch/api/v4/projects/291/trigger/pipeline
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master"
-      changes:
-        - ver/latest.Dockerfile
-
-trigger-version-build:
-  extends: .build
-  stage: .post
-  before_script:
-    - apk upgrade --no-cache
-    - apk add --update --no-cache curl
-  script:
-    - curl -X POST -F token=$JULIA_BASE -F ref=freeze-version https://gitlab.b-data.ch/api/v4/projects/291/trigger/pipeline
-  rules:
-    - if: $CI_COMMIT_BRANCH == "freeze-version"
-      changes:
-        - ver/$JULIA_VERSION.Dockerfile
+        - pubtools/$JULIA_VERSION.Dockerfile
