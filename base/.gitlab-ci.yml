@@ -6,7 +6,7 @@
     fi
   - |
     export CI_APP_REPO=${CI_APP_REPO:-$CI_REGISTRY_IMAGE}
-    if [[ $CI_COMMIT_BRANCH == "master" ]]; then
+    if [[ $CI_COMMIT_BRANCH == "main" ]]; then
       export CI_APP_TAG=${CI_APP_TAG:-latest}
     elif [[ $CI_COMMIT_BRANCH == "freeze-version" ]]; then
       export CI_APP_TAG=${CI_APP_TAG:-$JULIA_VERSION}
@@ -33,7 +33,7 @@
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: "/certs"
-    JULIA_VERSION: "1.7.3"
+    JULIA_VERSION: "1.8.0"
     UPDATE_MODE: "false"
   before_script:
     - *before-script-build
@@ -52,7 +52,7 @@ build:latest-linux-amd64:
       -f latest.Dockerfile .
     - docker push -a $CI_APP_REPO
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
+    - if: $CI_COMMIT_BRANCH == "main" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/amd64)/
       changes:
         - base/latest.Dockerfile
 
@@ -70,7 +70,7 @@ build:latest-linux-arm64v8:
       -f latest.Dockerfile .
     - docker push -a $CI_APP_REPO
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
+    - if: $CI_COMMIT_BRANCH == "main" && $UPDATE_MODE != "true" && $CI_BUILD_PLATFORMS =~ /(linux\/arm64\/v8)/
       changes:
         - base/latest.Dockerfile
 
@@ -143,7 +143,7 @@ build-manifest:latest-linux-multiarch:
       fi
       docker manifest push $CI_APP_REPO:$VERSION_MAJ
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" && $UPDATE_MODE != "true"
+    - if: $CI_COMMIT_BRANCH == "main" && $UPDATE_MODE != "true"
       changes:
         - base/latest.Dockerfile
 
@@ -162,13 +162,6 @@ build-manifest:version-linux-multiarch:
           $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
       fi
       docker manifest push $CI_APP_REPO:$CI_APP_TAG
-    - |
-      docker manifest create $CI_APP_REPO:$VERSION_MAJ_MIN $CI_MANIFEST_LIST
-      if echo $OS_ARCH | grep "linux-arm64v8" >/dev/null ; then
-        docker manifest annotate --variant v8 $CI_APP_REPO:$VERSION_MAJ_MIN \
-          $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
-      fi
-      docker manifest push $CI_APP_REPO:$VERSION_MAJ_MIN
   rules:
     - if: $CI_COMMIT_BRANCH == "freeze-version" && $CI_PIPELINE_TRIGGERED
       changes:
@@ -181,9 +174,9 @@ trigger-latest-build:
     - apk upgrade --no-cache
     - apk add --update --no-cache curl
   script:
-    - curl -X POST -F token=$JULIA_PUBTOOLS -F ref=master https://gitlab.b-data.ch/api/v4/projects/296/trigger/pipeline
+    - curl -X POST -F token=$JULIA_PUBTOOLS -F ref=main https://gitlab.b-data.ch/api/v4/projects/296/trigger/pipeline
   rules:
-    - if: $CI_COMMIT_BRANCH == "master"
+    - if: $CI_COMMIT_BRANCH == "main"
       changes:
         - base/latest.Dockerfile
 
