@@ -49,11 +49,11 @@ RUN apt-get update \
   && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
     # amd64
-    amd64) tarArch='x86_64'; dirArch='x64'; sha256='e80d732ccb7f79e000d798cb8b656dc3641ab59516d6e4e52e16765017892a00' ;; \
+    amd64) tarArch='x86_64'; dirArch='x64'; sha256='33054ee647ee8a4fb54fc05110e07e0b53e04591fe53d0a4cb4c7ed7a05e91f1' ;; \
     # arm64v8
-    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='e003cfb8680af1a65c3be55b53a48cc5186300adaaba8926209800b4d1f4ca7a' ;; \
+    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='ba06837ac2899547bbb799989f11464fecd6782226871c3b7a48619481042679' ;; \
     # i386
-    i386) tarArch='i686'; dirArch='x86'; sha256='68866069969aec0c249fedc23eecceaa818a83cc92650d3561d4d47d8a586301' ;; \
+    i386) tarArch='i686'; dirArch='x86'; sha256='975139acd9889c4db1e4d0945abe90f9c6b03ee3882837aa4b3e561d9c7f75a7' ;; \
     *) echo >&2 "error: current architecture ($dpkgArch) does not have a corresponding Julia binary release"; exit 1 ;; \
 	esac \
   && folder="$(echo "$JULIA_VERSION" | cut -d. -f1-2)" \
