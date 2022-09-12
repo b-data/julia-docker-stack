@@ -1,10 +1,11 @@
 ARG BASE_IMAGE=debian:bullseye
+ARG BUILD_ON_IMAGE=registry.gitlab.b-data.ch/julia/ver
 ARG JULIA_VERSION
 ARG GIT_VERSION=2.37.3
 ARG GIT_LFS_VERSION=3.2.0
 ARG PANDOC_VERSION=2.19.2
 
-FROM registry.gitlab.b-data.ch/julia/ver:${JULIA_VERSION} as files
+FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION} as files
 
 RUN mkdir /files
 
@@ -20,7 +21,7 @@ RUN chown -R root:root /files/var/backups/skel \
 FROM registry.gitlab.b-data.ch/git/gsi/${GIT_VERSION}/${BASE_IMAGE} as gsi
 FROM registry.gitlab.b-data.ch/git-lfs/glfsi:${GIT_LFS_VERSION} as glfsi
 
-FROM registry.gitlab.b-data.ch/julia/ver:${JULIA_VERSION}
+FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION}
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -76,12 +77,12 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
       python3-distutils; \
     ## make some useful symlinks that are expected to exist
     ## ("/usr/bin/python" and friends)
-	  for src in pydoc3 python3 python3-config; do \
-		  dst="$(echo "$src" | tr -d 3)"; \
-		  [ -s "/usr/bin/$src" ]; \
-		  [ ! -e "/usr/bin/$dst" ]; \
-		  ln -svT "$src" "/usr/bin/$dst"; \
-	  done; \
+    for src in pydoc3 python3 python3-config; do \
+      dst="$(echo "$src" | tr -d 3)"; \
+      [ -s "/usr/bin/$src" ]; \
+      [ ! -e "/usr/bin/$dst" ]; \
+      ln -svT "$src" "/usr/bin/$dst"; \
+    done; \
   fi \
   ## Install/update pip, setuptools and wheel
   && curl -sLO https://bootstrap.pypa.io/get-pip.py \
