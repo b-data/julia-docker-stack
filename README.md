@@ -2,11 +2,11 @@
 
 # Julia docker stack
 
-Pre-built multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images:
+Multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images:
 
-*  `registry.gitlab.b-data.ch/julia/ver`
-*  `registry.gitlab.b-data.ch/julia/base`
-*  `registry.gitlab.b-data.ch/julia/pubtools`
+*  [`registry.gitlab.b-data.ch/julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)
+*  [`registry.gitlab.b-data.ch/julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)
+*  [`registry.gitlab.b-data.ch/julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
 
 Images considered stable for Julia versions ≥ 1.7.3.  
 :point_right: The current state may eventually be backported to versions ≥
@@ -86,17 +86,17 @@ docker run -it --rm julia-ver[:<major>.<minor>.<patch>]
 
 from the project's GitLab Container Registries:
 
-*  [julia/ver](https://gitlab.b-data.ch/julia/ver/container_registry)  
+*  [`julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)  
     ```bash
     docker run -it --rm \
       registry.gitlab.b-data.ch/julia/ver[:<major>[.<minor>[.<patch>]]]
     ```
-*  [julia/base](https://gitlab.b-data.ch/julia/base/container_registry)  
+*  [`julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)  
     ```bash
     docker run -it --rm \
       registry.gitlab.b-data.ch/julia/base[:<major>[.<minor>[.<patch>]]]
     ```
-*  [julia/pubtools](https://gitlab.b-data.ch/julia/pubtools/container_registry)
+*  [`julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
     ```bash
     docker run -it --rm \
       registry.gitlab.b-data.ch/julia/pubtools[:<major>[.<minor>[.<patch>]]]
