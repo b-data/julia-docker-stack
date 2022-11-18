@@ -1,8 +1,12 @@
-ARG BASE_IMAGE=debian:bullseye
+ARG BASE_IMAGE=debian
+ARG BASE_IMAGE_TAG=11
 ARG BLAS=libopenblas-dev
 ARG JULIA_VERSION
+ARG CUDA_IMAGE
+ARG CUDA_VERSION
+ARG CUDA_IMAGE_SUBTAG
 
-FROM ${BASE_IMAGE}
+FROM ${CUDA_IMAGE:-$BASE_IMAGE}:${CUDA_VERSION:-$BASE_IMAGE_TAG}${CUDA_IMAGE_SUBTAG:+-}${CUDA_IMAGE_SUBTAG}
 
 LABEL org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.source="https://gitlab.b-data.ch/julia/docker-stack" \
@@ -12,12 +16,17 @@ LABEL org.opencontainers.image.licenses="MIT" \
 ARG DEBIAN_FRONTEND=noninteractive
 
 ARG BASE_IMAGE
+ARG BASE_IMAGE_TAG
 ARG BLAS
 ARG JULIA_VERSION
+ARG CUDA_IMAGE
+ARG CUDA_VERSION
+ARG CUDA_IMAGE_SUBTAG
 
-ENV BASE_IMAGE=${BASE_IMAGE} \
+ENV BASE_IMAGE=${BASE_IMAGE}:${BASE_IMAGE_TAG} \
     JULIA_VERSION=${JULIA_VERSION} \
     JULIA_PATH=/opt/julia \
+    CUDA_IMAGE=${CUDA_IMAGE}${CUDA_VERSION:+:}${CUDA_VERSION}${CUDA_IMAGE_SUBTAG:+-}${CUDA_IMAGE_SUBTAG} \
     LANG=en_US.UTF-8 \
     TERM=xterm \
     TZ=Etc/UTC
@@ -49,11 +58,11 @@ RUN apt-get update \
   && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
     # amd64
-    amd64) tarArch='x86_64'; dirArch='x64'; sha256='33054ee647ee8a4fb54fc05110e07e0b53e04591fe53d0a4cb4c7ed7a05e91f1' ;; \
+    amd64) tarArch='x86_64'; dirArch='x64'; sha256='671cf3a450b63a717e1eedd7f69087e3856f015b2e146cb54928f19a3c05e796' ;; \
     # arm64v8
-    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='ba06837ac2899547bbb799989f11464fecd6782226871c3b7a48619481042679' ;; \
+    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='f91c276428ffb30acc209e0eb3e70b1c91260e887e11d4b66f5545084b530547' ;; \
     # i386
-    i386) tarArch='i686'; dirArch='x86'; sha256='975139acd9889c4db1e4d0945abe90f9c6b03ee3882837aa4b3e561d9c7f75a7' ;; \
+    i386) tarArch='i686'; dirArch='x86'; sha256='3e407aef71bb075bbc7746a5d1f46116925490fb0cd992f453882e793fce6c29' ;; \
     *) echo >&2 "error: current architecture ($dpkgArch) does not have a corresponding Julia binary release"; exit 1 ;; \
 	esac \
   && folder="$(echo "$JULIA_VERSION" | cut -d. -f1-2)" \
