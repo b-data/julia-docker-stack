@@ -1,7 +1,7 @@
 .env:
   variables:
-    JULIA_VERSION: "1.8.3"
-    CUDA_VERSION: "11.7.1"
+    JULIA_VERSION: "1.8.4"
+    CUDA_VERSION: "11.8.0"
 
 .before-script-build: &before-script-build
   - |
