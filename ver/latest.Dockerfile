@@ -1,12 +1,12 @@
 ARG BASE_IMAGE=debian
 ARG BASE_IMAGE_TAG=11
-ARG BLAS=libopenblas-dev
-ARG JULIA_VERSION
 ARG CUDA_IMAGE
 ARG CUDA_VERSION
 ARG CUDA_IMAGE_SUBTAG
+ARG BLAS=libopenblas-dev
+ARG JULIA_VERSION
 
-FROM ${CUDA_IMAGE:-$BASE_IMAGE}:${CUDA_VERSION:-$BASE_IMAGE_TAG}${CUDA_IMAGE_SUBTAG:+-}${CUDA_IMAGE_SUBTAG}
+FROM ${CUDA_IMAGE:-$BASE_IMAGE}:${CUDA_IMAGE:+$CUDA_VERSION}${CUDA_IMAGE:+-}${CUDA_IMAGE_SUBTAG:-$BASE_IMAGE_TAG}
 
 LABEL org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.source="https://gitlab.b-data.ch/julia/docker-stack" \
@@ -26,7 +26,8 @@ ARG CUDA_IMAGE_SUBTAG
 ENV BASE_IMAGE=${BASE_IMAGE}:${BASE_IMAGE_TAG} \
     JULIA_VERSION=${JULIA_VERSION} \
     JULIA_PATH=/opt/julia \
-    CUDA_IMAGE=${CUDA_IMAGE}${CUDA_VERSION:+:}${CUDA_VERSION}${CUDA_IMAGE_SUBTAG:+-}${CUDA_IMAGE_SUBTAG} \
+    CUDA_IMAGE=${CUDA_IMAGE}${CUDA_IMAGE:+:}${CUDA_IMAGE:+$CUDA_VERSION}${CUDA_IMAGE:+-}${CUDA_IMAGE_SUBTAG} \
+    PARENT_IMAGE=${CUDA_IMAGE:-$BASE_IMAGE}:${CUDA_IMAGE:+$CUDA_VERSION}${CUDA_IMAGE:+-}${CUDA_IMAGE_SUBTAG:-$BASE_IMAGE_TAG} \
     LANG=en_US.UTF-8 \
     TERM=xterm \
     TZ=Etc/UTC
@@ -58,11 +59,11 @@ RUN apt-get update \
   && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
     # amd64
-    amd64) tarArch='x86_64'; dirArch='x64'; sha256='671cf3a450b63a717e1eedd7f69087e3856f015b2e146cb54928f19a3c05e796' ;; \
+    amd64) tarArch='x86_64'; dirArch='x64'; sha256='33c3b09356ffaa25d3331c3646b1f2d4b09944e8f93fcb994957801b8bbf58a9' ;; \
     # arm64v8
-    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='f91c276428ffb30acc209e0eb3e70b1c91260e887e11d4b66f5545084b530547' ;; \
+    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='dbffb134a413b712d4a8e1ee8e665ea55edb0865719a1bad9979123d6433acc9' ;; \
     # i386
-    i386) tarArch='i686'; dirArch='x86'; sha256='3e407aef71bb075bbc7746a5d1f46116925490fb0cd992f453882e793fce6c29' ;; \
+    i386) tarArch='i686'; dirArch='x86'; sha256='3604051bf434e7a9ecfc306826d363216f835d22103baf5c31bb70f196dac625' ;; \
     *) echo >&2 "error: current architecture ($dpkgArch) does not have a corresponding Julia binary release"; exit 1 ;; \
 	esac \
   && folder="$(echo "$JULIA_VERSION" | cut -d. -f1-2)" \
