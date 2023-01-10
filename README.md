@@ -61,7 +61,7 @@ latest:
 
 ```bash
 cd ver && docker build \
-  --build-arg JULIA_VERSION=1.8.4 \
+  --build-arg JULIA_VERSION=1.8.5 \
   -t julia/ver \
   -f latest.Dockerfile .
 ```
