@@ -61,8 +61,8 @@ latest:
 
 ```bash
 cd ver && docker build \
-  --build-arg JULIA_VERSION=1.8.1 \
-  -t julia-ver \
+  --build-arg JULIA_VERSION=1.8.4 \
+  -t julia/ver \
   -f latest.Dockerfile .
 ```
 
@@ -70,18 +70,18 @@ version:
 
 ```bash
 cd ver && docker build \
-  -t julia-ver:<major>.<minor>.<patch> \
-  -f <major>.<minor>.<patch>.Dockerfile .
+  -t julia/ver:MAJOR.MINOR.PATCH \
+  -f MAJOR.MINOR.PATCH.Dockerfile .
 ```
 
-For `<major>.<minor>.<patch>` ≥ `1.7.3`.
+For `MAJOR.MINOR.PATCH` ≥ `1.7.3`.
 
 ### Run container
 
 self built:
 
 ```bash
-docker run -it --rm julia-ver[:<major>.<minor>.<patch>]
+docker run -it --rm julia/ver[:MAJOR.MINOR.PATCH]
 ```
 
 from the project's GitLab Container Registries:
@@ -89,17 +89,17 @@ from the project's GitLab Container Registries:
 *  [`julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)  
     ```bash
     docker run -it --rm \
-      registry.gitlab.b-data.ch/julia/ver[:<major>[.<minor>[.<patch>]]]
+      registry.gitlab.b-data.ch/julia/ver[:MAJOR[.MINOR[.PATCH]]]
     ```
 *  [`julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)  
     ```bash
     docker run -it --rm \
-      registry.gitlab.b-data.ch/julia/base[:<major>[.<minor>[.<patch>]]]
+      registry.gitlab.b-data.ch/julia/base[:MAJOR[.MINOR[.PATCH]]]
     ```
 *  [`julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
     ```bash
     docker run -it --rm \
-      registry.gitlab.b-data.ch/julia/pubtools[:<major>[.<minor>[.<patch>]]]
+      registry.gitlab.b-data.ch/julia/pubtools[:MAJOR[.MINOR[.PATCH]]]
     ```
 
 ## Contributing

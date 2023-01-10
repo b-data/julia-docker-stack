@@ -1,7 +1,8 @@
 .env:
   variables:
-    JULIA_VERSION: "1.8.3"
-    CUDA_VERSION: "11.7.1"
+    JULIA_VERSION: "1.8.4"
+    PYTHON_VERSION: "3.10.9"
+    CUDA_VERSION: "11.8.0"
 
 .before-script-build: &before-script-build
   - |
@@ -57,6 +58,7 @@ build:latest-linux-amd64:
       --build-arg CUDA_VERSION
       --build-arg CUDA_IMAGE_SUBTAG
       --build-arg JULIA_VERSION
+      --build-arg PYTHON_VERSION
       -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
       -t $CI_APP_REPO:latest-linux-amd64
       -f ver/latest.Dockerfile .
@@ -80,6 +82,7 @@ build:latest-linux-arm64v8:
       --build-arg CUDA_VERSION
       --build-arg CUDA_IMAGE_SUBTAG
       --build-arg JULIA_VERSION
+      --build-arg PYTHON_VERSION
       -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
       -t $CI_APP_REPO:latest-linux-arm64v8
       -f ver/latest.Dockerfile .
