@@ -2,11 +2,11 @@
 
 # Julia docker stack
 
-Multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images:
+Multi-arch (`linux/amd64`, `linux/arm64/v8`) images:
 
-*  [`registry.gitlab.b-data.ch/julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)
-*  [`registry.gitlab.b-data.ch/julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)
-*  [`registry.gitlab.b-data.ch/julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
+* [`registry.gitlab.b-data.ch/julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)
+* [`registry.gitlab.b-data.ch/julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)
+* [`registry.gitlab.b-data.ch/julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
 
 Images considered stable for Julia versions ≥ 1.7.3.  
 :point_right: The current state may eventually be backported to versions ≥
@@ -19,28 +19,28 @@ Images considered stable for Julia versions ≥ 1.7.3.
 
 The other images are counterparts to the JupyterLab images but **without**
 
-*  code-server
-*  IJulia
-*  JupyterHub
-*  JupyterLab
-    *  JupyterLab Extensions
-    *  JupyterLab Integrations
-*  Jupyter Notebook
-    *  Jupyter Notebook Conversion
-*  LSP Servers
-*  Oh My Zsh
-    *  Powerlevel10k Theme
-    *  MesloLGS NF Font
+* code-server
+* IJulia
+* JupyterHub
+* JupyterLab
+  * JupyterLab Extensions
+  * JupyterLab Integrations
+* Jupyter Notebook
+  * Jupyter Notebook Conversion
+* LSP Servers
+* Oh My Zsh
+  * Powerlevel10k Theme
+  * MesloLGS NF Font
 
 and any configuration thereof.
 
 ## Table of Contents
 
-*  [Prerequisites](#prerequisites)
-*  [Install](#install)
-*  [Usage](#usage)
-*  [Contributing](#contributing)
-*  [License](#license)
+* [Prerequisites](#prerequisites)
+* [Install](#install)
+* [Usage](#usage)
+* [Contributing](#contributing)
+* [License](#license)
 
 ## Prerequisites
 
@@ -50,8 +50,8 @@ This projects requires an installation of docker.
 
 To install docker, follow the instructions for your platform:
 
-*  [Install Docker Engine | Docker Documentation > Supported platforms](https://docs.docker.com/engine/install/#supported-platforms)
-*  [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/)
+* [Install Docker Engine | Docker Documentation > Supported platforms](https://docs.docker.com/engine/install/#supported-platforms)
+* [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/)
 
 ## Usage
 
@@ -87,21 +87,21 @@ docker run -it --rm julia/ver[:MAJOR.MINOR.PATCH]
 
 from the project's GitLab Container Registries:
 
-*  [`julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)  
-    ```bash
-    docker run -it --rm \
-      registry.gitlab.b-data.ch/julia/ver[:MAJOR[.MINOR[.PATCH]]]
-    ```
-*  [`julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)  
-    ```bash
-    docker run -it --rm \
-      registry.gitlab.b-data.ch/julia/base[:MAJOR[.MINOR[.PATCH]]]
-    ```
-*  [`julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
-    ```bash
-    docker run -it --rm \
-      registry.gitlab.b-data.ch/julia/pubtools[:MAJOR[.MINOR[.PATCH]]]
-    ```
+* [`julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)  
+  ```bash
+  docker run -it --rm \
+    registry.gitlab.b-data.ch/julia/ver[:MAJOR[.MINOR[.PATCH]]]
+  ```
+* [`julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)  
+  ```bash
+  docker run -it --rm \
+    registry.gitlab.b-data.ch/julia/base[:MAJOR[.MINOR[.PATCH]]]
+  ```
+* [`julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
+  ```bash
+  docker run -it --rm \
+    registry.gitlab.b-data.ch/julia/pubtools[:MAJOR[.MINOR[.PATCH]]]
+  ```
 
 ## Contributing
 
