@@ -12,6 +12,10 @@ Images considered stable for Julia versions ≥ 1.7.3.
 :point_right: The current state may eventually be backported to versions ≥
 1.5.4.
 
+**Build chain**
+
+ver → base → pubtools
+
 **Features**
 
 `registry.gitlab.b-data.ch/julia/ver` serves as base image for
