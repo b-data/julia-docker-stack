@@ -18,7 +18,7 @@ ver → base → pubtools
 
 **Features**
 
-`registry.gitlab.b-data.ch/julia/ver` serves as base image for
+`registry.gitlab.b-data.ch/julia/ver` serves as parent image for
 `registry.gitlab.b-data.ch/jupyterlab/julia/base`.
 
 The other images are counterparts to the JupyterLab images but **without**
