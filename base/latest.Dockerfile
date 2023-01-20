@@ -121,6 +121,10 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
 RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
   ## Install Revise
   && julia -e 'using Pkg; Pkg.add("Revise"); Pkg.precompile()' \
+  ## Install CUDA
+  && if [ ! -z "$CUDA_IMAGE" ]; then \
+    julia -e 'using Pkg; Pkg.add("CUDA"); Pkg.precompile()'; \
+  fi \
   && julia -e 'using Pkg; Pkg.add(readdir("$(ENV["JULIA_DEPOT_PATH"])/packages"))' \
   && rm -rf ${JULIA_DEPOT_PATH}/registries/* \
   && chmod -R ugo+rx ${JULIA_DEPOT_PATH}
