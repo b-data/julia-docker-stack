@@ -56,7 +56,7 @@ The Python version is selected as follows:
 
 This Python version is installed at `/usr/local/bin`.
 
-# Notes on CUDA
+# Additional notes on CUDA
 
 The CUDA and OS versions are selected as follows:
 
