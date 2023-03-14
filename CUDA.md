@@ -2,9 +2,9 @@
 
 GPU accelerated, multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images:
 
-* [`registry.gitlab.b-data.ch/cuda/julia/ver`](https://gitlab.b-data.ch/cuda/julia/ver/container_registry)
-* [`registry.gitlab.b-data.ch/cuda/julia/base`](https://gitlab.b-data.ch/cuda/julia/base/container_registry)
-* [`registry.gitlab.b-data.ch/cuda/julia/pubtools`](https://gitlab.b-data.ch/cuda/julia/pubtools/container_registry)
+* [`glcr.b-data.ch/cuda/julia/ver`](https://gitlab.b-data.ch/cuda/julia/ver/container_registry)
+* [`glcr.b-data.ch/cuda/julia/base`](https://gitlab.b-data.ch/cuda/julia/base/container_registry)
+* [`glcr.b-data.ch/cuda/julia/pubtools`](https://gitlab.b-data.ch/cuda/julia/pubtools/container_registry)
 
 Images available for Julia versions ≥ 1.8.5.
 
@@ -14,8 +14,8 @@ The same as the [Julia docker stack](README.md#julia-docker-stack).
 
 **Features**
 
-`registry.gitlab.b-data.ch/cuda/julia/ver:*-devel` serves as parent image for
-`registry.gitlab.b-data.ch/jupyterlab/cuda/julia/base`.
+`glcr.b-data.ch/cuda/julia/ver:*-devel` serves as parent image for
+`glcr.b-data.ch/jupyterlab/cuda/julia/base`.
 
 Otherwise the same as the [Julia docker stack](README.md#julia-docker-stack) plus
 
@@ -65,7 +65,7 @@ docker build \
   --build-arg CUDA_VERSION=11.8.0 \
   --build-arg CUDA_IMAGE_SUBTAG=cudnn8-runtime-ubuntu22.04 \
   --build-arg JULIA_VERSION=1.8.5 \
-  --build-arg PYTHON_VERSION=3.10.9 \
+  --build-arg PYTHON_VERSION=3.10.10 \
   -t cuda/julia/ver \
   -f ver/latest.Dockerfile .
 ```
@@ -122,19 +122,19 @@ from the project's GitLab Container Registries:
   ```bash
   docker run -it --rm \
     --gpus '"device=all"' \
-    registry.gitlab.b-data.ch/cuda/julia/ver[:MAJOR[.MINOR[.PATCH]]]
+    glcr.b-data.ch/cuda/julia/ver[:MAJOR[.MINOR[.PATCH]]]
   ```
 * [`cuda/julia/base`](https://gitlab.b-data.ch/cuda/julia/base/container_registry)  
   ```bash
   docker run -it --rm \
     --gpus '"device=all"' \
-    registry.gitlab.b-data.ch/cuda/julia/base[:MAJOR[.MINOR[.PATCH]]]
+    glcr.b-data.ch/cuda/julia/base[:MAJOR[.MINOR[.PATCH]]]
   ```
 * [`cuda/julia/pubtools`](https://gitlab.b-data.ch/cuda/julia/pubtools/container_registry)  
   ```bash
   docker run -it --rm \
     --gpus '"device=all"' \
-    registry.gitlab.b-data.ch/cuda/julia/pubtools[:MAJOR[.MINOR[.PATCH]]]
+    glcr.b-data.ch/cuda/julia/pubtools[:MAJOR[.MINOR[.PATCH]]]
   ```
 
 See [Notes](NOTES.md) for tweaks.

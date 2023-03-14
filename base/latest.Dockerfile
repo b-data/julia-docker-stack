@@ -1,6 +1,6 @@
 ARG BASE_IMAGE=debian
 ARG BASE_IMAGE_TAG=11
-ARG BUILD_ON_IMAGE=registry.gitlab.b-data.ch/julia/ver
+ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/ver
 ARG JULIA_VERSION
 ARG GIT_VERSION=2.39.2
 ARG GIT_LFS_VERSION=3.3.0
@@ -19,8 +19,8 @@ RUN chown -R root:root /files/var/backups/skel \
   && find /files -type d -exec chmod 755 {} \; \
   && find /files -type f -exec chmod 644 {} \;
 
-FROM registry.gitlab.b-data.ch/git/gsi/${GIT_VERSION}/${BASE_IMAGE}:${BASE_IMAGE_TAG} as gsi
-FROM registry.gitlab.b-data.ch/git-lfs/glfsi:${GIT_LFS_VERSION} as glfsi
+FROM glcr.b-data.ch/git/gsi/${GIT_VERSION}/${BASE_IMAGE}:${BASE_IMAGE_TAG} as gsi
+FROM glcr.b-data.ch/git-lfs/glfsi:${GIT_LFS_VERSION} as glfsi
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION}
 

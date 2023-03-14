@@ -7,9 +7,9 @@
 
 Multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images:
 
-* [`registry.gitlab.b-data.ch/julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)
-* [`registry.gitlab.b-data.ch/julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)
-* [`registry.gitlab.b-data.ch/julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
+* [`glcr.b-data.ch/julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)
+* [`glcr.b-data.ch/julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)
+* [`glcr.b-data.ch/julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
 
 Images considered stable for Julia versions ≥ 1.7.3.  
 :point_right: The current state may eventually be backported to versions ≥
@@ -21,8 +21,8 @@ ver → base → pubtools
 
 **Features**
 
-`registry.gitlab.b-data.ch/julia/ver` serves as parent image for
-`registry.gitlab.b-data.ch/jupyterlab/julia/base`.
+`glcr.b-data.ch/julia/ver` serves as parent image for
+`glcr.b-data.ch/jupyterlab/julia/base`.
 
 The other images are counterparts to the JupyterLab images but **without**
 
@@ -69,7 +69,7 @@ To install docker, follow the instructions for your platform:
 ```bash
 docker build \
   --build-arg JULIA_VERSION=1.8.5 \
-  --build-arg PYTHON_VERSION=3.10.9 \
+  --build-arg PYTHON_VERSION=3.10.10 \
   -t julia/ver \
   -f ver/latest.Dockerfile .
 ```
@@ -97,17 +97,17 @@ from the project's GitLab Container Registries:
 * [`julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)  
   ```bash
   docker run -it --rm \
-    registry.gitlab.b-data.ch/julia/ver[:MAJOR[.MINOR[.PATCH]]]
+    glcr.b-data.ch/julia/ver[:MAJOR[.MINOR[.PATCH]]]
   ```
 * [`julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)  
   ```bash
   docker run -it --rm \
-    registry.gitlab.b-data.ch/julia/base[:MAJOR[.MINOR[.PATCH]]]
+    glcr.b-data.ch/julia/base[:MAJOR[.MINOR[.PATCH]]]
   ```
 * [`julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
   ```bash
   docker run -it --rm \
-    registry.gitlab.b-data.ch/julia/pubtools[:MAJOR[.MINOR[.PATCH]]]
+    glcr.b-data.ch/julia/pubtools[:MAJOR[.MINOR[.PATCH]]]
   ```
 
 ## Contributing
