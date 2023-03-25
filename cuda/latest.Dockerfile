@@ -23,6 +23,10 @@ ENV CUDA_HOME=${CUDA_HOME} \
 RUN cpuBlasLib="$(update-alternatives --query \
   libblas.so.3-$(uname -m)-linux-gnu | grep Value | cut -f2 -d' ')" \
   && dpkgArch="$(dpkg --print-architecture)" \
+  ## Unminimise if the system has been minimised
+  && if [ ${CUDA_IMAGE_FLAVOR} = "devel" -a $(command -v unminimize) ]; then \
+    yes | unminimize; \
+  fi \
   ## NVBLAS log configuration
   && touch /var/log/nvblas.log \
   && chown :users /var/log/nvblas.log \
