@@ -103,7 +103,7 @@ docker run -it --rm \
 
 * [`glcr.b-data.ch/julia/ver`](https://gitlab.b-data.ch/julia/ver/container_registry)
 * [`glcr.b-data.ch/julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)
-* [glcr.b-data.ch/`julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
+* [`glcr.b-data.ch/julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
 
 ## Contributing
 
