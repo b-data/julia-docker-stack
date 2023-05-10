@@ -2,6 +2,8 @@ ARG BASE_IMAGE=debian:bullseye
 ARG BLAS=libopenblas-dev
 ARG JULIA_VERSION=1.8.1
 
+FROM registry.gitlab.b-data.ch/julia/jsi/${JULIA_VERSION}/${BASE_IMAGE} as jsi
+
 FROM ${BASE_IMAGE}
 
 LABEL org.opencontainers.image.licenses="MIT" \
@@ -21,6 +23,9 @@ ENV BASE_IMAGE=${BASE_IMAGE} \
     LANG=en_US.UTF-8 \
     TERM=xterm \
     TZ=Etc/UTC
+
+## Install Julia
+COPY --from=jsi /usr/local/julia ${JULIA_PATH}
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -44,25 +49,9 @@ RUN apt-get update \
     update-alternatives --set liblapack.so.3-$(uname -m)-linux-gnu \
       /usr/lib/$(uname -m)-linux-gnu/openblas-pthread/liblapack.so.3; \
   fi \
-  ## Install Julia
-  && cd /tmp \
-  && dpkgArch="$(dpkg --print-architecture)" \
-  && case "${dpkgArch##*-}" in \
-    # amd64
-    amd64) tarArch='x86_64'; dirArch='x64'; sha256='33054ee647ee8a4fb54fc05110e07e0b53e04591fe53d0a4cb4c7ed7a05e91f1' ;; \
-    # arm64v8
-    arm64) tarArch='aarch64'; dirArch='aarch64'; sha256='ba06837ac2899547bbb799989f11464fecd6782226871c3b7a48619481042679' ;; \
-    # i386
-    i386) tarArch='i686'; dirArch='x86'; sha256='975139acd9889c4db1e4d0945abe90f9c6b03ee3882837aa4b3e561d9c7f75a7' ;; \
-    *) echo >&2 "error: current architecture ($dpkgArch) does not have a corresponding Julia binary release"; exit 1 ;; \
-	esac \
-  && folder="$(echo "$JULIA_VERSION" | cut -d. -f1-2)" \
-  && curl -fL -o julia.tar.gz "https://julialang-s3.julialang.org/bin/linux/${dirArch}/${folder}/julia-${JULIA_VERSION}-linux-${tarArch}.tar.gz" \
-  && echo "${sha256} *julia.tar.gz" | sha256sum -c - \
-  && mkdir ${JULIA_PATH} \
-  && tar -xzf julia.tar.gz -C ${JULIA_PATH} --no-same-owner --strip-components=1 \
+  ## Change owner and group of Julia installation
+  && chown -R root:root ${JULIA_PATH} \
   ## Clean up
-  && rm -rf /tmp/* \
   && rm -rf /var/lib/apt/lists/*
 
 ENV PATH=$JULIA_PATH/bin:$PATH

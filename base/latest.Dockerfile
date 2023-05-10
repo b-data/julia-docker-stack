@@ -1,10 +1,10 @@
 ARG BASE_IMAGE=debian
 ARG BASE_IMAGE_TAG=11
-ARG BUILD_ON_IMAGE=registry.gitlab.b-data.ch/julia/ver
+ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/ver
 ARG JULIA_VERSION
-ARG GIT_VERSION=2.39.0
+ARG GIT_VERSION=2.40.1
 ARG GIT_LFS_VERSION=3.3.0
-ARG PANDOC_VERSION=2.19.2
+ARG PANDOC_VERSION=3.1.1
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION} as files
 
@@ -19,8 +19,8 @@ RUN chown -R root:root /files/var/backups/skel \
   && find /files -type d -exec chmod 755 {} \; \
   && find /files -type f -exec chmod 644 {} \;
 
-FROM registry.gitlab.b-data.ch/git/gsi/${GIT_VERSION}/${BASE_IMAGE}:${BASE_IMAGE_TAG} as gsi
-FROM registry.gitlab.b-data.ch/git-lfs/glfsi:${GIT_LFS_VERSION} as glfsi
+FROM glcr.b-data.ch/git/gsi/${GIT_VERSION}/${BASE_IMAGE}:${BASE_IMAGE_TAG} as gsi
+FROM glcr.b-data.ch/git-lfs/glfsi:${GIT_LFS_VERSION} as glfsi
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION}
 
@@ -30,11 +30,13 @@ ARG BUILD_ON_IMAGE
 ARG GIT_VERSION
 ARG GIT_LFS_VERSION
 ARG PANDOC_VERSION
+ARG BUILD_START
 
 ENV PARENT_IMAGE=${BUILD_ON_IMAGE}:${JULIA_VERSION} \
     GIT_VERSION=${GIT_VERSION} \
     GIT_LFS_VERSION=${GIT_LFS_VERSION} \
-    PANDOC_VERSION=${PANDOC_VERSION}
+    PANDOC_VERSION=${PANDOC_VERSION} \
+    BUILD_DATE=${BUILD_START}
 
 ## Install Git
 COPY --from=gsi /usr/local /usr/local
@@ -101,11 +103,11 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
     rm get-pip.py; \
   fi \
   ## Set default branch name to main
-  && sudo git config --system init.defaultBranch main \
+  && git config --system init.defaultBranch main \
   ## Store passwords for one hour in memory
   && git config --system credential.helper "cache --timeout=3600" \
   ## Merge the default branch from the default remote when "git pull" is run
-  && sudo git config --system pull.rebase false \
+  && git config --system pull.rebase false \
   ## Install pandoc
   && curl -sLO https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-${dpkgArch}.deb \
   && dpkg -i pandoc-${PANDOC_VERSION}-1-${dpkgArch}.deb \
@@ -119,7 +121,12 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
 RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
   ## Install Revise
   && julia -e 'using Pkg; Pkg.add("Revise"); Pkg.precompile()' \
+  ## Install CUDA
+  && if [ ! -z "$CUDA_IMAGE" ]; then \
+    julia -e 'using Pkg; Pkg.add("CUDA"); Pkg.precompile()'; \
+  fi \
   && julia -e 'using Pkg; Pkg.add(readdir("$(ENV["JULIA_DEPOT_PATH"])/packages"))' \
+  && rm -rf ${JULIA_DEPOT_PATH}/registries/* \
   && chmod -R ugo+rx ${JULIA_DEPOT_PATH}
 
 ## Copy files as late as possible to avoid cache busting

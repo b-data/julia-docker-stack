@@ -1,6 +1,6 @@
 .env:
   variables:
-    JULIA_VERSION: "1.8.4"
+    JULIA_VERSION: "1.8.5"
 
 .before-script-build: &before-script-build
   - |
@@ -26,19 +26,22 @@
     sed -n "s|\([[:digit:]]\+\).*|\1|p"`
 
 .build:
-  image: registry.gitlab.b-data.ch/docker/docker-buildx:latest
+  image: glcr.b-data.ch/docker/docker:dind
   stage: build
   extends: .env
   services:
-    - docker:dind
+    - name: glcr.b-data.ch/docker/docker:dind
+      alias: docker
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: "/certs"
+    BUILDX_NO_DEFAULT_ATTESTATIONS: "true"
   before_script:
     - *before-script-build
+  retry: 2
 
 .post:
-  image: registry.gitlab.b-data.ch/docker/docker-buildx:latest
+  image: glcr.b-data.ch/docker/docker:dind
   stage: .post
   extends: .env
 
@@ -52,6 +55,7 @@ build:latest-linux-amd64:
       docker build --pull
       --build-arg BUILD_ON_IMAGE
       --build-arg JULIA_VERSION
+      --build-arg BUILD_START=$(date -uIseconds)
       -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
       -t $CI_APP_REPO:latest-linux-amd64
       -f pubtools/latest.Dockerfile .
@@ -71,6 +75,7 @@ build:latest-linux-arm64v8:
       docker build --pull
       --build-arg BUILD_ON_IMAGE
       --build-arg JULIA_VERSION
+      --build-arg BUILD_START=$(date -uIseconds)
       -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
       -t $CI_APP_REPO:latest-linux-arm64v8
       -f pubtools/latest.Dockerfile .
@@ -89,6 +94,7 @@ build:version-linux-amd64:
     - >
       docker build --pull
       --build-arg BUILD_ON_IMAGE
+      --build-arg BUILD_START=$(date -uIseconds)
       -t $CI_APP_REPO:$CI_APP_TAG-linux-amd64
       -f pubtools/$JULIA_VERSION.Dockerfile .
     - docker push $CI_APP_REPO:$CI_APP_TAG-linux-amd64
@@ -106,6 +112,7 @@ build:version-linux-arm64v8:
     - >
       docker build --pull
       --build-arg BUILD_ON_IMAGE
+      --build-arg BUILD_START=$(date -uIseconds)
       -t $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
       -f pubtools/$JULIA_VERSION.Dockerfile .
     - docker push $CI_APP_REPO:$CI_APP_TAG-linux-arm64v8
