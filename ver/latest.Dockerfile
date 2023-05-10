@@ -36,7 +36,7 @@ ENV BASE_IMAGE=${BASE_IMAGE}:${BASE_IMAGE_TAG} \
     PYTHON_VERSION=${PYTHON_VERSION} \
     BUILD_DATE=${BUILD_START}
 
-ENV JULIA_PATH=/opt/julia \
+ENV JULIA_PATH=/usr/local/julia \
     LANG=en_US.UTF-8 \
     TERM=xterm \
     TZ=Etc/UTC
