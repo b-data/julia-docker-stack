@@ -115,7 +115,7 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
   ## Clean up
   && rm -rf /tmp/* \
   && rm -rf /var/lib/apt/lists/* \
-    $HOME/.cache
+    ${HOME}/.cache
 
 ## Install Julia related stuff
 RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
