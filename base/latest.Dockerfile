@@ -2,7 +2,7 @@ ARG BASE_IMAGE=debian
 ARG BASE_IMAGE_TAG=11
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/ver
 ARG JULIA_VERSION
-ARG GIT_VERSION=2.40.1
+ARG GIT_VERSION=2.41.0
 ARG GIT_LFS_VERSION=3.3.0
 ARG PANDOC_VERSION=3.1.1
 
@@ -115,7 +115,7 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
   ## Clean up
   && rm -rf /tmp/* \
   && rm -rf /var/lib/apt/lists/* \
-    $HOME/.cache
+    ${HOME}/.cache
 
 ## Install Julia related stuff
 RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \

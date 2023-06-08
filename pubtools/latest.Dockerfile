@@ -1,6 +1,6 @@
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/base
 ARG JULIA_VERSION
-ARG QUARTO_VERSION=1.3.340
+ARG QUARTO_VERSION=1.3.361
 ARG CTAN_REPO=https://mirror.ctan.org/systems/texlive/tlnet
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION}
@@ -48,8 +48,8 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
   ## Admin-based install of TinyTeX
   && wget -qO- "https://yihui.org/tinytex/install-unx.sh" \
     | sh -s - --admin --no-path \
-  && mv ~/.TinyTeX /opt/TinyTeX \
-  && sed -i 's/\/root\/.TinyTeX/\/opt\/TinyTeX/g' \
+  && mv ${HOME}/.TinyTeX /opt/TinyTeX \
+  && sed -i "s|${HOME}/.TinyTeX|/opt/TinyTeX|g" \
     /opt/TinyTeX/texmf-var/fonts/conf/texlive-fontconfig.conf \
   && ln -rs /opt/TinyTeX/bin/$(uname -m)-linux \
     /opt/TinyTeX/bin/linux \
@@ -82,6 +82,6 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
   ## Clean up
   && rm -rf /tmp/* \
   && rm -rf /var/lib/apt/lists/* \
-    $HOME/.config \
-    $HOME/.local \
-    $HOME/.wget-hsts
+    ${HOME}/.config \
+    ${HOME}/.local \
+    ${HOME}/.wget-hsts
