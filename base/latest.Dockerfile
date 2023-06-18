@@ -123,7 +123,9 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
   && julia -e 'using Pkg; Pkg.add("Revise"); Pkg.precompile()' \
   ## Install CUDA
   && if [ ! -z "$CUDA_IMAGE" ]; then \
-    julia -e 'using Pkg; Pkg.add("CUDA"); Pkg.precompile()'; \
+    julia -e 'using Pkg; Pkg.add("CUDA")'; \
+    julia -e 'using CUDA; CUDA.set_runtime_version!("local")'; \
+    julia -e 'using CUDA; CUDA.precompile_runtime()'; \
   fi \
   && julia -e 'using Pkg; Pkg.add(readdir("$(ENV["JULIA_DEPOT_PATH"])/packages"))' \
   && rm -rf ${JULIA_DEPOT_PATH}/registries/* \
