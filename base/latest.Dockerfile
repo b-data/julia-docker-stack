@@ -2,8 +2,8 @@ ARG BASE_IMAGE=debian
 ARG BASE_IMAGE_TAG=12
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/ver
 ARG JULIA_VERSION
-ARG GIT_VERSION=2.41.0
-ARG GIT_LFS_VERSION=3.3.0
+ARG GIT_VERSION=2.42.0
+ARG GIT_LFS_VERSION=3.4.0
 ARG PANDOC_VERSION=3.1.1
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION} as files
@@ -127,6 +127,7 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
     julia -e 'using CUDA; CUDA.set_runtime_version!("local")'; \
     julia -e 'using CUDA; CUDA.precompile_runtime()'; \
   fi \
+  ## Make installed packages available system-wide
   && julia -e 'using Pkg; Pkg.add(readdir("$(ENV["JULIA_DEPOT_PATH"])/packages"))' \
   && rm -rf ${JULIA_DEPOT_PATH}/registries/* \
   && chmod -R ugo+rx ${JULIA_DEPOT_PATH}
