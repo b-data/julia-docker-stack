@@ -1,6 +1,6 @@
 .env:
   variables:
-    JULIA_VERSION: "1.9.3"
+    JULIA_VERSION: "1.9.4"
     PYTHON_VERSION: "3.11.6"
     CUDA_VERSION: "11.8.0"
     LIBNVINFER_VERSION: "8.5.3-1"
