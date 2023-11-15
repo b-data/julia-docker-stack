@@ -2,9 +2,11 @@ ARG BASE_IMAGE=debian
 ARG BASE_IMAGE_TAG=12
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/ver
 ARG JULIA_VERSION
-ARG GIT_VERSION=2.42.0
+ARG GIT_VERSION=2.42.1
 ARG GIT_LFS_VERSION=3.4.0
 ARG PANDOC_VERSION=3.1.1
+
+ARG JULIA_CUDA_PACKAGE_VERSION=5.1.0
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION} as files
 
@@ -31,6 +33,8 @@ ARG GIT_VERSION
 ARG GIT_LFS_VERSION
 ARG PANDOC_VERSION
 ARG BUILD_START
+
+ARG JULIA_CUDA_PACKAGE_VERSION
 
 ENV PARENT_IMAGE=${BUILD_ON_IMAGE}:${JULIA_VERSION} \
     GIT_VERSION=${GIT_VERSION} \
@@ -61,6 +65,7 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
     libclang-dev \
     man-db \
     nano \
+    ncdu \
     procps \
     psmisc \
     screen \
@@ -123,8 +128,8 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
   && julia -e 'using Pkg; Pkg.add("Revise"); Pkg.precompile()' \
   ## Install CUDA
   && if [ ! -z "$CUDA_IMAGE" ]; then \
-    julia -e 'using Pkg; Pkg.add("CUDA")'; \
-    julia -e 'using CUDA; CUDA.set_runtime_version!("local")'; \
+    julia -e "using Pkg; Pkg.add(name=\"CUDA\", version=\"$JULIA_CUDA_PACKAGE_VERSION\")"; \
+    julia -e "using CUDA; CUDA.set_runtime_version!(v\"${CUDA_VERSION%.*}\"; local_toolkit=true)"; \
     julia -e 'using CUDA; CUDA.precompile_runtime()'; \
   fi \
   ## Make installed packages available system-wide

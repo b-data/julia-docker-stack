@@ -68,12 +68,12 @@ RUN cpuBlasLib="$(update-alternatives --query \
   && if [ ${CUDA_IMAGE_FLAVOR} = "runtime" ]; then \
     ## Add required packages for CUDA.jl
     ## if runtime-flavor of CUDA image is used
-    CUDA_VERSION_MAJ_MIN_SLASH=$(echo ${CUDA_VERSION%.*} | tr '.' '-'); \
+    CUDA_VERSION_MAJ_MIN_DASH=$(echo ${CUDA_VERSION%.*} | tr '.' '-'); \
     apt-get update; \
     apt-get -y install --no-install-recommends \
-      cuda-command-line-tools-${CUDA_VERSION_MAJ_MIN_SLASH}=${NV_CUDA_LIB_VERSION} \
-      cuda-libraries-dev-${CUDA_VERSION_MAJ_MIN_SLASH}=${NV_CUDA_LIB_VERSION} \
-      cuda-nvcc-${CUDA_VERSION_MAJ_MIN_SLASH}=${NV_CUDA_CUDART_VERSION}; \
+      cuda-command-line-tools-${CUDA_VERSION_MAJ_MIN_DASH}=${NV_CUDA_LIB_VERSION} \
+      cuda-libraries-dev-${CUDA_VERSION_MAJ_MIN_DASH}=${NV_CUDA_LIB_VERSION} \
+      cuda-nvcc-${CUDA_VERSION_MAJ_MIN_DASH}=${NV_CUDA_CUDART_VERSION}; \
   fi \
   ## Clean up
   && rm -rf /var/lib/apt/lists/*
