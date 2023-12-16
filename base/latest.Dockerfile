@@ -3,7 +3,7 @@ ARG BASE_IMAGE_TAG=12
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/ver
 ARG JULIA_VERSION
 ARG GIT_VERSION=2.43.0
-ARG GIT_LFS_VERSION=3.4.0
+ARG GIT_LFS_VERSION=3.4.1
 ARG PANDOC_VERSION=3.1.1
 
 ARG JULIA_CUDA_PACKAGE_VERSION=5.1.1
@@ -94,9 +94,9 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
     ## ("/usr/bin/python" and friends)
     for src in pydoc3 python3 python3-config; do \
       dst="$(echo "$src" | tr -d 3)"; \
-      [ -s "/usr/bin/$src" ]; \
-      [ ! -e "/usr/bin/$dst" ]; \
-      ln -svT "$src" "/usr/bin/$dst"; \
+      if [ -s "/usr/bin/$src" ] && [ ! -e "/usr/bin/$dst" ]; then \
+        ln -svT "$src" "/usr/bin/$dst"; \
+      fi \
     done; \
   else \
     ## Force update pip, setuptools and wheel
