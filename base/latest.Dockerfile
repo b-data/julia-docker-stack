@@ -12,10 +12,10 @@ FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION} as files
 
 RUN mkdir /files
 
-COPY conf/julia /files/${JULIA_PATH}
-COPY conf/user /files
+COPY conf/julia/etc /files/etc
+COPY conf/julia/JULIA_PATH /files/${JULIA_PATH}
 
-RUN chown -R root:root /files/var/backups/skel \
+RUN mkdir -p "/files/etc/skel/.julia/environments/v${JULIA_VERSION%.*}" \
   ## Ensure file modes are correct when using CI
   ## Otherwise set to 777 in the target image
   && find /files -type d -exec chmod 755 {} \; \
@@ -147,4 +147,4 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
 
 ## Copy files as late as possible to avoid cache busting
 COPY --from=files /files /
-COPY --from=files /files/var/backups/skel /root
+COPY --from=files /files/etc/skel/.julia /root/.julia
