@@ -2,20 +2,20 @@ ARG BASE_IMAGE=debian
 ARG BASE_IMAGE_TAG=12
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/ver
 ARG JULIA_VERSION
-ARG GIT_VERSION=2.43.0
+ARG GIT_VERSION=2.43.1
 ARG GIT_LFS_VERSION=3.4.1
-ARG PANDOC_VERSION=3.1.1
+ARG PANDOC_VERSION=3.1.11
 
-ARG JULIA_CUDA_PACKAGE_VERSION=5.1.1
+ARG JULIA_CUDA_PACKAGE_VERSION=5.2.0
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION} as files
 
 RUN mkdir /files
 
-COPY conf/julia /files/${JULIA_PATH}
-COPY conf/user /files
+COPY conf/julia/etc /files/etc
+COPY conf/julia/JULIA_PATH /files/${JULIA_PATH}
 
-RUN chown -R root:root /files/var/backups/skel \
+RUN mkdir -p "/files/etc/skel/.julia/environments/v${JULIA_VERSION%.*}" \
   ## Ensure file modes are correct when using CI
   ## Otherwise set to 777 in the target image
   && find /files -type d -exec chmod 755 {} \; \
@@ -124,6 +124,14 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
 
 ## Install Julia related stuff
 RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
+  ## Determine JULIA_CPU_TARGETs for different architectures
+  ## https://github.com/JuliaCI/julia-buildkite/blob/main/utilities/build_envs.sh
+  && dpkgArch="$(dpkg --print-architecture)" \
+  && case "${dpkgArch}" in \
+    amd64) export JULIA_CPU_TARGET="generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)" ;; \
+    arm64) export JULIA_CPU_TARGET="generic;cortex-a57;thunderx2t99;carmel" ;; \
+    *) echo "Unknown target processor architecture '${dpkgArch}'" >&2; exit 1 ;; \
+  esac \
   ## Install Revise
   && julia -e 'using Pkg; Pkg.add("Revise"); Pkg.precompile()' \
   ## Install CUDA
@@ -139,4 +147,4 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
 
 ## Copy files as late as possible to avoid cache busting
 COPY --from=files /files /
-COPY --from=files /files/var/backups/skel /root
+COPY --from=files /files/etc/skel/.julia /root/.julia

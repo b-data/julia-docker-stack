@@ -49,7 +49,6 @@ COPY --from=psi /usr/local /usr/local
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \
-    curl \
     liblapack-dev \
     ${BLAS} \
     locales \
