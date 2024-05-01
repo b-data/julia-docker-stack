@@ -1,6 +1,6 @@
 .env:
   variables:
-    JULIA_VERSION: "1.10.2"
+    JULIA_VERSION: "1.10.3"
     PYTHON_VERSION: "3.12.3"
     CUDA_VERSION: "12.4.1"
     CUDNN_VERSION_AMD64: "8.9.7.29"
