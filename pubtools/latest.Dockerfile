@@ -1,6 +1,6 @@
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/base
 ARG JULIA_VERSION
-ARG QUARTO_VERSION=1.4.550
+ARG QUARTO_VERSION=1.4.553
 ARG CTAN_REPO=https://mirror.ctan.org/systems/texlive/tlnet
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION}
@@ -27,6 +27,8 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
     librsvg2-bin \
     qpdf \
     texinfo \
+    ## Python: For h5py wheels (arm64)
+    libhdf5-dev \
   ## Install quarto
   && curl -sLO https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-${dpkgArch}.tar.gz \
   && mkdir -p /opt/quarto \

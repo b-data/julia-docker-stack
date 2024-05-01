@@ -2,11 +2,11 @@ ARG BASE_IMAGE=debian
 ARG BASE_IMAGE_TAG=12
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/ver
 ARG JULIA_VERSION
-ARG GIT_VERSION=2.44.0
-ARG GIT_LFS_VERSION=3.4.1
+ARG GIT_VERSION=2.45.0
+ARG GIT_LFS_VERSION=3.5.1
 ARG PANDOC_VERSION=3.1.11
 
-ARG JULIA_CUDA_PACKAGE_VERSION=5.2.0
+ARG JULIA_CUDA_PACKAGE_VERSION=5.3.3
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION} as files
 
@@ -128,8 +128,8 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
   ## https://github.com/JuliaCI/julia-buildkite/blob/main/utilities/build_envs.sh
   && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch}" in \
-    amd64) export JULIA_CPU_TARGET="generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)" ;; \
-    arm64) export JULIA_CPU_TARGET="generic;cortex-a57;thunderx2t99;carmel" ;; \
+    amd64) export JULIA_CPU_TARGET="generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1);x86-64-v4,-rdrnd,base(1)" ;; \
+    arm64) export JULIA_CPU_TARGET="generic;cortex-a57;thunderx2t99;carmel,clone_all;apple-m1,base(3);neoverse-512tvb,base(3)" ;; \
     *) echo "Unknown target processor architecture '${dpkgArch}'" >&2; exit 1 ;; \
   esac \
   ## Install Revise
