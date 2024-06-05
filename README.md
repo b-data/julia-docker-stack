@@ -68,7 +68,7 @@ To install docker, follow the instructions for your platform:
 
 ```bash
 docker build \
-  --build-arg JULIA_VERSION=1.10.2 \
+  --build-arg JULIA_VERSION=1.10.3 \
   --build-arg PYTHON_VERSION=3.12.3 \
   -t julia/ver \
   -f ver/latest.Dockerfile .
@@ -115,4 +115,6 @@ This project follows the
 
 ## License
 
-[MIT](LICENSE) © 2020 b-data GmbH
+Copyright © 2020 b-data GmbH
+
+Distributed under the terms of the [MIT License](LICENSE).
