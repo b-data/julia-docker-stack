@@ -1,4 +1,4 @@
-# CUDA-enabled Julia docker stack
+# CUDA-based Julia docker stack
 
 GPU accelerated, multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images:
 
