@@ -78,7 +78,7 @@ docker build \
   --build-arg CUDNN_VERSION=8.9.7.29 \
   --build-arg CUDNN_CUDA_VERSION_MAJ_MIN=12.2 \
   --build-arg LIBNVINFER_VERSION=10.1.0.27 \
-  --build-arg LIBNVINFER_CUDA_VERSION_MAJ_MIN=12.4 \
+  --build-arg LIBNVINFER_CUDA_VERSION_MAJ_MIN=12.5 \
   --build-arg CUDA_IMAGE_FLAVOR=runtime \
   -t cuda/julia/ver \
   -f cuda/latest.Dockerfile .
