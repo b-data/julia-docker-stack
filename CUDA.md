@@ -62,7 +62,7 @@ docker build \
   --build-arg BASE_IMAGE=ubuntu \
   --build-arg BASE_IMAGE_TAG=22.04 \
   --build-arg CUDA_IMAGE=nvidia/cuda \
-  --build-arg CUDA_VERSION=12.6.0 \
+  --build-arg CUDA_VERSION=12.6.1 \
   --build-arg CUDA_IMAGE_SUBTAG=runtime-ubuntu22.04 \
   --build-arg JULIA_VERSION=1.10.5 \
   --build-arg PYTHON_VERSION=3.12.5 \
