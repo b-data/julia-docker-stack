@@ -62,10 +62,10 @@ docker build \
   --build-arg BASE_IMAGE=ubuntu \
   --build-arg BASE_IMAGE_TAG=22.04 \
   --build-arg CUDA_IMAGE=nvidia/cuda \
-  --build-arg CUDA_VERSION=12.6.0 \
+  --build-arg CUDA_VERSION=12.6.1 \
   --build-arg CUDA_IMAGE_SUBTAG=runtime-ubuntu22.04 \
-  --build-arg JULIA_VERSION=1.10.4 \
-  --build-arg PYTHON_VERSION=3.12.5 \
+  --build-arg JULIA_VERSION=1.10.5 \
+  --build-arg PYTHON_VERSION=3.12.7 \
   -t cuda/julia/ver \
   -f ver/latest.Dockerfile .
 ```
@@ -77,8 +77,8 @@ docker build \
   --build-arg BUILD_ON_IMAGE=cuda/julia/ver \
   --build-arg CUDNN_VERSION=8.9.7.29 \
   --build-arg CUDNN_CUDA_VERSION_MAJ_MIN=12.2 \
-  --build-arg LIBNVINFER_VERSION=10.3.0.26 \
-  --build-arg LIBNVINFER_CUDA_VERSION_MAJ_MIN=12.5 \
+  --build-arg LIBNVINFER_VERSION=10.5.0.18 \
+  --build-arg LIBNVINFER_CUDA_VERSION_MAJ_MIN=12.6 \
   --build-arg CUDA_IMAGE_FLAVOR=runtime \
   -t cuda/julia/ver \
   -f cuda/latest.Dockerfile .
