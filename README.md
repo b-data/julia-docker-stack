@@ -69,7 +69,7 @@ To install docker, follow the instructions for your platform:
 
 ```bash
 docker build \
-  --build-arg JULIA_VERSION=1.10.5 \
+  --build-arg JULIA_VERSION=1.11.0 \
   --build-arg PYTHON_VERSION=3.12.7 \
   -t julia/ver \
   -f ver/latest.Dockerfile .
@@ -116,7 +116,7 @@ This project follows the
 
 ## Support
 
-Community support: Open a new disussion
+Community support: Open a new discussion
 [here](https://github.com/orgs/b-data/discussions).
 
 Commercial support: Contact b-data by [email](mailto:support@b-data.ch).
