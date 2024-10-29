@@ -51,7 +51,6 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
   && apt-get -y purge equivs \
   && apt-get -y autoremove \
   ## Admin-based install of TinyTeX
-  && echo "prefer-family = IPv4" > ${HOME}/.wgetrc \
   && CTAN_REPO_ORIG=${CTAN_REPO} \
   && CTAN_REPO=${CTAN_REPO_BUILD_LATEST:-$CTAN_REPO} \
   && export CTAN_REPO \
@@ -94,7 +93,6 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
   && rm -rf /var/lib/apt/lists/* \
     ${HOME}/.config \
     ${HOME}/.local \
-    ${HOME}/.wget-hsts \
-    ${HOME}/.wgetrc
+    ${HOME}/.wget-hsts
 
 ENV CTAN_REPO=${CTAN_REPO}
