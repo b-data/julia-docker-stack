@@ -13,8 +13,8 @@ ARG LIBNVINFER_CUDA_VERSION_MAJ_MIN_AMD64=12.6
 ARG LIBNVINFER_CUDA_VERSION_MAJ_MIN_ARM64=12.5
 
 ## CUDA_IMAGE
-## ├── nvidia/cuda:12.6.1-runtime-ubuntu22.04
-## └── nvidia/cuda:12.6.1-devel-ubuntu22.04
+## ├── nvidia/cuda:12.6.2-runtime-ubuntu22.04
+## └── nvidia/cuda:12.6.2-devel-ubuntu22.04
 ARG BUILD_ON_IMAGE
 ARG CUDNN_VERSION_MAJ=${CUDNN_VERSION%%.*}
 ARG CUDNN_VERSION_MAJ=${CUDNN_VERSION_MAJ:-${CUDNN_VERSION_AMD64%%.*}}
