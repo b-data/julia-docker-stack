@@ -139,7 +139,7 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
     *) echo "Unknown target processor architecture '${dpkgArch}'" >&2; exit 1 ;; \
   esac \
   ## Install Revise
-  && julia -e 'using Pkg; Pkg.add("Revise"); Pkg.precompile()' \
+  && julia -e 'using Pkg; Pkg.add(["Pkg", "Revise"]); Pkg.precompile()' \
   ## Install CUDA
   && if [ ! -z "$CUDA_IMAGE" ]; then \
     julia -e "using Pkg; Pkg.add(name=\"CUDA\", version=\"$JULIA_CUDA_PACKAGE_VERSION\")"; \
