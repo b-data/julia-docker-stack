@@ -64,7 +64,7 @@ docker build \
   --build-arg CUDA_IMAGE=nvidia/cuda \
   --build-arg CUDA_VERSION=12.6.3 \
   --build-arg CUDA_IMAGE_SUBTAG=runtime-ubuntu22.04 \
-  --build-arg JULIA_VERSION=1.11.2 \
+  --build-arg JULIA_VERSION=1.11.3 \
   --build-arg PYTHON_VERSION=3.12.8 \
   -t cuda/julia/ver \
   -f ver/latest.Dockerfile .
