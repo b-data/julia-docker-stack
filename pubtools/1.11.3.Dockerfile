@@ -1,5 +1,5 @@
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/base
-ARG JULIA_VERSION=1.10.8
+ARG JULIA_VERSION=1.11.3
 ARG QUARTO_VERSION=1.6.42
 ARG CTAN_REPO=https://www.texlive.info/tlnet-archive/2025/03/10/tlnet
 
