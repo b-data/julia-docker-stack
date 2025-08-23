@@ -55,8 +55,11 @@ COPY --from=psi /usr/local /usr/local
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \
+    libffi-dev \
+    libgdbm-dev \
     liblapack-dev \
     ${BLAS} \
+    libreadline-dev \
     locales \
     netbase \
     tzdata \
