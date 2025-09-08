@@ -58,7 +58,7 @@ This Python version is installed at `/usr/local/bin`.
 
 # Additional notes on CUDA
 
-The CUDA and OS versions are selected as follows:
+The CUDA version is selected as follows:
 
 * CUDA: The lastest version that has image flavour `devel` including cuDNN
   available.
