@@ -23,7 +23,6 @@ Otherwise the same as the [Julia docker stack](README.md#julia-docker-stack) plu
   [CUDA math libraries](https://developer.nvidia.com/gpu-accelerated-libraries),
   [NCCL](https://developer.nvidia.com/nccl) and
   [cuDNN](https://developer.nvidia.com/cudnn)
-* TensortRT and TensorRT plugin libraries
 
 ## Table of Contents
 
