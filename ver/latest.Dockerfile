@@ -1,5 +1,5 @@
 ARG BASE_IMAGE=debian
-ARG BASE_IMAGE_TAG=12
+ARG BASE_IMAGE_TAG=13
 ARG CUDA_IMAGE
 ARG CUDA_IMAGE_SUBTAG
 ARG BLAS=libopenblas-dev
@@ -55,8 +55,11 @@ COPY --from=psi /usr/local /usr/local
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \
+    libffi-dev \
+    libgdbm-dev \
     liblapack-dev \
     ${BLAS} \
+    libreadline-dev \
     locales \
     netbase \
     tzdata \
