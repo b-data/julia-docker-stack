@@ -70,7 +70,7 @@ To install docker, follow the instructions for your platform:
 ```bash
 docker build \
   --build-arg JULIA_VERSION=1.12.2 \
-  --build-arg PYTHON_VERSION=3.13.9 \
+  --build-arg PYTHON_VERSION=3.13.10 \
   -t julia/ver \
   -f ver/latest.Dockerfile .
 ```
