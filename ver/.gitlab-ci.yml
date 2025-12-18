@@ -109,8 +109,9 @@ build:latest-linux-amd64:
       if [[ ! -z "$CUDA_IMAGE" ]]; then
         docker build \
         --build-arg CUDNN_VERSION_AMD64 \
-        --build-arg NCCL_VERSION_AMD64 \
         --build-arg CUDNN_CUDA_VERSION_MAJ_MIN_AMD64 \
+        --build-arg NCCL_VERSION_AMD64 \
+        --build-arg NCCL_CUDA_VERSION_MAJ_MIN_AMD64 \
         --build-arg LIBNVINFER_VERSION_AMD64 \
         --build-arg LIBNVINFER_CUDA_VERSION_MAJ_MIN_AMD64 \
         --build-arg BUILD_ON_IMAGE=$CI_APP_REPO:$CI_APP_TAG${CUDA_IMAGE_FLAVOR:+-}$CUDA_IMAGE_FLAVOR-linux-amd64 \
@@ -152,8 +153,9 @@ build:latest-linux-arm64v8:
       if [[ ! -z "$CUDA_IMAGE" ]]; then
         docker build \
         --build-arg CUDNN_VERSION_ARM64 \
-        --build-arg NCCL_VERSION_ARM64 \
         --build-arg CUDNN_CUDA_VERSION_MAJ_MIN_ARM64 \
+        --build-arg NCCL_VERSION_ARM64 \
+        --build-arg NCCL_CUDA_VERSION_MAJ_MIN_ARM64 \
         --build-arg LIBNVINFER_VERSION_ARM64 \
         --build-arg LIBNVINFER_CUDA_VERSION_MAJ_MIN_ARM64 \
         --build-arg BUILD_ON_IMAGE=$CI_APP_REPO:$CI_APP_TAG${CUDA_IMAGE_FLAVOR:+-}$CUDA_IMAGE_FLAVOR-linux-arm64v8 \
