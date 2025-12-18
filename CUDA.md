@@ -75,6 +75,7 @@ docker build \
 docker build \
   --build-arg BUILD_ON_IMAGE=cuda/julia/ver \
   --build-arg CUDNN_VERSION=9.17.0.29 \
+  --build-arg NCCL_VERSION=2.28.9 \
   --build-arg CUDNN_CUDA_VERSION_MAJ_MIN=13.0 \
   --build-arg CUDA_IMAGE_FLAVOR=runtime \
   -t cuda/julia/ver \
