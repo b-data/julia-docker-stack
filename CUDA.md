@@ -64,7 +64,7 @@ docker build \
   --build-arg CUDA_VERSION=13.1.1 \
   --build-arg CUDA_IMAGE_SUBTAG=runtime-ubuntu24.04 \
   --build-arg JULIA_VERSION=1.12.4 \
-  --build-arg PYTHON_VERSION=3.13.11 \
+  --build-arg PYTHON_VERSION=3.13.12 \
   -t cuda/julia/ver \
   -f ver/latest.Dockerfile .
 ```
