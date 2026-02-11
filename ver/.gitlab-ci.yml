@@ -1,13 +1,13 @@
 variables:
-  JULIA_VERSION: "1.12.3"
+  JULIA_VERSION: "1.12.4"
   PYTHON_VERSION: "3.13.11"
-  CUDA_VERSION: "13.1.0"
-  CUDNN_VERSION_AMD64: "9.17.1.4"
-  CUDNN_VERSION_ARM64: "9.17.1.4"
+  CUDA_VERSION: "13.1.1"
+  CUDNN_VERSION_AMD64: "9.19.0.56"
+  CUDNN_VERSION_ARM64: "9.19.0.56"
   CUDNN_CUDA_VERSION_MAJ_MIN_AMD64: "13.1"
   CUDNN_CUDA_VERSION_MAJ_MIN_ARM64: "13.1"
-  NCCL_VERSION_AMD64: "2.29.2"
-  NCCL_VERSION_ARM64: "2.29.2"
+  NCCL_VERSION_AMD64: "2.29.3"
+  NCCL_VERSION_ARM64: "2.29.3"
   NCCL_CUDA_VERSION_MAJ_MIN_AMD64: "13.1"
   NCCL_CUDA_VERSION_MAJ_MIN_ARM64: "13.1"
   TAG_VERSION_MAJ_MIN: "false"
@@ -15,10 +15,10 @@ variables:
 
 workflow:
   rules:
-    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CUDA_BASE_IMAGE == null && $JULIA_VERSION =~ /1.10/
+    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CUDA_BASE_IMAGE == null && $JULIA_VERSION =~ /^1.10/
       variables:
         BASE_IMAGE_TAG: "12"
-    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CUDA_BASE_IMAGE == "ubuntu" && $JULIA_VERSION =~ /1.10/
+    - if: $CI_COMMIT_BRANCH == "freeze-version" && $CUDA_BASE_IMAGE == "ubuntu" && $JULIA_VERSION =~ /^1.10/
       variables:
         BASE_IMAGE: "$CUDA_BASE_IMAGE"
         BASE_IMAGE_TAG: "22.04"
