@@ -2,12 +2,12 @@ ARG BASE_IMAGE=debian
 ARG BASE_IMAGE_TAG=12
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/ver
 ARG JULIA_VERSION=1.10.11
-ARG NEOVIM_VERSION=0.11.6
+ARG NEOVIM_VERSION=0.12.1
 ARG GIT_VERSION=2.53.0
 ARG GIT_LFS_VERSION=3.7.1
-ARG PANDOC_VERSION=3.6.3
+ARG PANDOC_VERSION=3.8.3
 
-ARG JULIA_CUDA_PACKAGE_VERSION=5.10.1
+ARG JULIA_CUDA_PACKAGE_VERSION=6.0.0
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION} as files
 
@@ -139,7 +139,7 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
     *) echo "Unknown target processor architecture '${dpkgArch}'" >&2; exit 1 ;; \
   esac \
   ## Install Revise
-  && julia -e 'using Pkg; Pkg.add(Pkg.PackageSpec(;name="Revise", version="3.12.3")); Pkg.precompile()' \
+  && julia -e 'using Pkg; Pkg.add(["Pkg", "Revise"]); Pkg.precompile()' \
   ## Install CUDA
   && if [ ! -z "$CUDA_IMAGE" ]; then \
     julia -e "using Pkg; Pkg.add(name=\"CUDA\", version=\"$JULIA_CUDA_PACKAGE_VERSION\")"; \
