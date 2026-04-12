@@ -1,7 +1,7 @@
 ARG BUILD_ON_IMAGE=glcr.b-data.ch/julia/base
-ARG JULIA_VERSION=1.11.9
+ARG JULIA_VERSION=1.12.5
 ARG QUARTO_VERSION=1.9.37
-ARG CTAN_REPO=https://mirror.ctan.org/systems/texlive/tlnet
+ARG CTAN_REPO=https://www.texlive.info/tlnet-archive/2026/04/09/tlnet
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION}
 

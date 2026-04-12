@@ -6,7 +6,7 @@ ARG CUDNN_CUDA_VERSION_MAJ_MIN_AMD64=${CUDNN_CUDA_VERSION_MAJ_MIN}
 ARG CUDNN_CUDA_VERSION_MAJ_MIN_ARM64=${CUDNN_CUDA_VERSION_MAJ_MIN}
 
 ARG LIBNVINFER_VERSION
-ARG LIBNVINFER_VERSION_AMD64=10.15.1.29
+ARG LIBNVINFER_VERSION_AMD64=10.16.1.11
 ARG LIBNVINFER_VERSION_ARM64=10.3.0.26
 ARG LIBNVINFER_CUDA_VERSION_MAJ_MIN
 ARG LIBNVINFER_CUDA_VERSION_MAJ_MIN_AMD64=12.9
@@ -197,6 +197,9 @@ RUN cpuBlasLib="$(update-alternatives --query \
     if dpkg --compare-versions ${LIBNVINFER_VERSION} gt "8.6"; then \
       headers="-headers"; \
     fi; \
+    if dpkg --compare-versions ${LIBNVINFER_VERSION} gt "10.16"; then \
+      safe="-safe"; \
+    fi; \
   fi \
   && LIBNVINFER_VERSION_MAJ=${LIBNVINFER_VERSION%%.*} \
   && CUDA_VERSION_MAJ_MIN=${LIBNVINFER_CUDA_VERSION_MAJ_MIN:-${CUDA_VERSION%.*}} \
@@ -204,6 +207,7 @@ RUN cpuBlasLib="$(update-alternatives --query \
     libnvinfer${LIBNVINFER_VERSION_MAJ}=${LIBNVINFER_VERSION}-1+cuda${CUDA_VERSION_MAJ_MIN} \
     libnvinfer${dev:-${LIBNVINFER_VERSION_MAJ}}=${LIBNVINFER_VERSION}-1+cuda${CUDA_VERSION_MAJ_MIN} \
     libnvinfer${headers}${dev:-${LIBNVINFER_VERSION_MAJ}}=${LIBNVINFER_VERSION}-1+cuda${CUDA_VERSION_MAJ_MIN} \
+    libnvinfer${safe}${headers}${dev:-${LIBNVINFER_VERSION_MAJ}}=${LIBNVINFER_VERSION}-1+cuda${CUDA_VERSION_MAJ_MIN} \
     libnvinfer-plugin${LIBNVINFER_VERSION_MAJ}=${LIBNVINFER_VERSION}-1+cuda${CUDA_VERSION_MAJ_MIN} \
     libnvinfer-plugin${dev:-${LIBNVINFER_VERSION_MAJ}}=${LIBNVINFER_VERSION}-1+cuda${CUDA_VERSION_MAJ_MIN} \
     libnvinfer${headers}-plugin${dev:-${LIBNVINFER_VERSION_MAJ}}=${LIBNVINFER_VERSION}-1+cuda${CUDA_VERSION_MAJ_MIN} \
@@ -212,6 +216,7 @@ RUN cpuBlasLib="$(update-alternatives --query \
     libnvinfer${LIBNVINFER_VERSION_MAJ} \
     libnvinfer${dev:-${LIBNVINFER_VERSION_MAJ}} \
     libnvinfer${headers}${dev:-${LIBNVINFER_VERSION_MAJ}} \
+    libnvinfer${safe}${headers}${dev:-${LIBNVINFER_VERSION_MAJ}} \
     libnvinfer-plugin${LIBNVINFER_VERSION_MAJ} \
     libnvinfer-plugin${dev:-${LIBNVINFER_VERSION_MAJ}} \
     libnvinfer${headers}-plugin${dev:-${LIBNVINFER_VERSION_MAJ}} \
