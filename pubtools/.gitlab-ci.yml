@@ -18,7 +18,7 @@ variables:
       export CI_APP_TAG=${CI_APP_TAG:-$CI_COMMIT_SHA}
     fi
   - |
-    if [[ "TAG_VERSION_MAJ_MIN" == "true" ]]; then
+    if [[ "$TAG_VERSION_MAJ_MIN" == "true" ]]; then
       export CTAN_REPO_RELEASE_LTS="https://mirror.init7.net/ctan/systems/texlive/tlnet"
     fi
   - >
