@@ -11,14 +11,14 @@ Multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images:
 * [`glcr.b-data.ch/julia/base`](https://gitlab.b-data.ch/julia/base/container_registry)
 * [`glcr.b-data.ch/julia/pubtools`](https://gitlab.b-data.ch/julia/pubtools/container_registry)
 
-Due to ongoing DDoS attacks, access to b-data's IT infrastructure has been
-blocked for all Chinese servers.  
-:information_source: For any requests to unblock individual IPs or CIDR blocks,
-please contact [@benz0li](https://github.com/benz0li).
-
 Images considered stable for Julia versions ≥ 1.7.3.  
 :point_right: The current state may eventually be backported to versions ≥
 1.5.4.
+
+Due to ongoing DDoS attacks, access to b-data's IT infrastructure has been
+blocked for all Chinese servers.  
+:information_source: For any requests to unblock individual Chinese IPs or CIDR
+blocks, please contact [@benz0li](https://github.com/benz0li).
 
 **Build chain**
 
