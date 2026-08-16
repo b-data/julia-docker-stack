@@ -15,6 +15,11 @@ Images considered stable for Julia versions ≥ 1.7.3.
 :point_right: The current state may eventually be backported to versions ≥
 1.5.4.
 
+Due to ongoing DDoS attacks, access to b-data's IT infrastructure has been
+blocked for all Chinese servers.  
+:information_source: For any requests to unblock individual Chinese IPs or CIDR
+blocks, please contact <olivier.benz@b-data.ch>.
+
 **Build chain**
 
 ver → base → pubtools
@@ -69,8 +74,8 @@ To install docker, follow the instructions for your platform:
 
 ```bash
 docker build \
-  --build-arg JULIA_VERSION=1.12.5 \
-  --build-arg PYTHON_VERSION=3.13.11 \
+  --build-arg JULIA_VERSION=1.12.6 \
+  --build-arg PYTHON_VERSION=3.14.7 \
   -t julia/ver \
   -f ver/latest.Dockerfile .
 ```
