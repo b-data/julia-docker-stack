@@ -1,11 +1,11 @@
 ARG BASE_IMAGE=debian
-ARG BASE_IMAGE_TAG=12
+ARG BASE_IMAGE_TAG=13
 ARG CUDA_IMAGE
 ARG CUDA_IMAGE_SUBTAG
 ARG BLAS=libopenblas-dev
-ARG CUDA_VERSION=12.9.1
-ARG JULIA_VERSION=1.10.11
-ARG PYTHON_VERSION=3.12.14
+ARG CUDA_VERSION=13.3.1
+ARG JULIA_VERSION=1.12.6
+ARG PYTHON_VERSION=3.14.7
 
 FROM glcr.b-data.ch/julia/jsi/${JULIA_VERSION}/${BASE_IMAGE}:${BASE_IMAGE_TAG} as jsi
 FROM glcr.b-data.ch/python/psi${PYTHON_VERSION:+/}${PYTHON_VERSION:-:none}${PYTHON_VERSION:+/$BASE_IMAGE}${PYTHON_VERSION:+:$BASE_IMAGE_TAG} as psi
@@ -55,8 +55,11 @@ COPY --from=psi /usr/local /usr/local
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \
+    libffi-dev \
+    libgdbm-dev \
     liblapack-dev \
     ${BLAS} \
+    libreadline-dev \
     locales \
     netbase \
     tzdata \
