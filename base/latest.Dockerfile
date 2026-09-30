@@ -7,7 +7,7 @@ ARG GIT_VERSION=2.55.0
 ARG GIT_LFS_VERSION=3.8.0
 ARG PANDOC_VERSION=3.10
 
-ARG JULIA_CUDA_PACKAGE_VERSION=6.3.1
+ARG JULIA_CUDA_PACKAGE_VERSION=6.4.0
 
 FROM ${BUILD_ON_IMAGE}:${JULIA_VERSION} as files
 
@@ -135,7 +135,7 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
   && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch}" in \
     amd64) export JULIA_CPU_TARGET="generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1);x86-64-v4,-rdrnd,base(1)" ;; \
-    arm64) export JULIA_CPU_TARGET="generic;cortex-a57;thunderx2t99;carmel,clone_all;apple-m1,base(3);neoverse-512tvb,base(3)" ;; \
+    arm64) export JULIA_CPU_TARGET="generic;cortex-a57;thunderx2t99;carmel,clone_all;apple-m1,base(3);neoverse-512tvb,-rand,-fpac,base(3)" ;; \
     *) echo "Unknown target processor architecture '${dpkgArch}'" >&2; exit 1 ;; \
   esac \
   ## Install Revise
@@ -147,6 +147,8 @@ RUN export JULIA_DEPOT_PATH=${JULIA_PATH}/local/share/julia \
     julia -e 'using CUDA; CUDA.precompile_runtime()'; \
   fi \
   ## Make installed packages available system-wide
+  && find ${JULIA_DEPOT_PATH} -name CACHEDIR.TAG -exec rm {} \; \
+  && rm -rf ${JULIA_DEPOT_PATH}/packages/temp \
   && julia -e 'using Pkg; Pkg.add(readdir("$(ENV["JULIA_DEPOT_PATH"])/packages"))' \
   && rm -rf ${JULIA_DEPOT_PATH}/registries/* \
   && chmod -R ugo+rx ${JULIA_DEPOT_PATH}
