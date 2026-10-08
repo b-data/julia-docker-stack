@@ -6,8 +6,6 @@ variables:
   CUDNN_VERSION_ARM64: "9.27.0.42"
   CUDNN_CUDA_VERSION_MAJ_MIN_AMD64: "13.4"
   CUDNN_CUDA_VERSION_MAJ_MIN_ARM64: "13.4"
-  NCCL_VERSION_AMD64: "2.31.2"
-  NCCL_VERSION_ARM64: "2.31.2"
   NCCL_CUDA_VERSION_MAJ_MIN_AMD64: "13.4"
   NCCL_CUDA_VERSION_MAJ_MIN_ARM64: "13.4"
   TAG_VERSION_MAJ_MIN: "false"
@@ -110,7 +108,6 @@ build:latest-linux-amd64:
         docker build \
         --build-arg CUDNN_VERSION_AMD64 \
         --build-arg CUDNN_CUDA_VERSION_MAJ_MIN_AMD64 \
-        --build-arg NCCL_VERSION_AMD64 \
         --build-arg NCCL_CUDA_VERSION_MAJ_MIN_AMD64 \
         --build-arg LIBNVINFER_VERSION_AMD64 \
         --build-arg LIBNVINFER_CUDA_VERSION_MAJ_MIN_AMD64 \
@@ -154,7 +151,6 @@ build:latest-linux-arm64v8:
         docker build \
         --build-arg CUDNN_VERSION_ARM64 \
         --build-arg CUDNN_CUDA_VERSION_MAJ_MIN_ARM64 \
-        --build-arg NCCL_VERSION_ARM64 \
         --build-arg NCCL_CUDA_VERSION_MAJ_MIN_ARM64 \
         --build-arg LIBNVINFER_VERSION_ARM64 \
         --build-arg LIBNVINFER_CUDA_VERSION_MAJ_MIN_ARM64 \
