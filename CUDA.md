@@ -61,10 +61,10 @@ docker build \
   --build-arg BASE_IMAGE=ubuntu \
   --build-arg BASE_IMAGE_TAG=24.04 \
   --build-arg CUDA_IMAGE=nvidia/cuda \
-  --build-arg CUDA_VERSION=13.4.1 \
+  --build-arg CUDA_VERSION=13.4.2 \
   --build-arg CUDA_IMAGE_SUBTAG=runtime-ubuntu24.04 \
-  --build-arg JULIA_VERSION=1.13.0 \
-  --build-arg PYTHON_VERSION=3.14.7 \
+  --build-arg JULIA_VERSION=1.13.1 \
+  --build-arg PYTHON_VERSION=3.14.8 \
   -t cuda/julia/ver \
   -f ver/latest.Dockerfile .
 ```
@@ -74,7 +74,7 @@ docker build \
 ```bash
 docker build \
   --build-arg BUILD_ON_IMAGE=cuda/julia/ver \
-  --build-arg CUDNN_VERSION=9.26.0.51 \
+  --build-arg CUDNN_VERSION=9.27.0.42 \
   --build-arg CUDNN_CUDA_VERSION_MAJ_MIN=13.4 \
   --build-arg NCCL_VERSION=2.31.2 \
   --build-arg NCCL_CUDA_VERSION_MAJ_MIN=13.4 \
