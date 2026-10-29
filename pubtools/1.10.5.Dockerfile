@@ -12,7 +12,7 @@ ARG NB_GID=100
 ARG BUILD_ON_IMAGE
 ARG QUARTO_VERSION
 ARG CTAN_REPO
-ARG CTAN_REPO_BUILD_LATEST
+ARG CTAN_REPO_BUILD
 ARG BUILD_START
 
 ENV PARENT_IMAGE=${BUILD_ON_IMAGE}:${JULIA_VERSION} \
@@ -52,8 +52,10 @@ RUN dpkgArch="$(dpkg --print-architecture)" \
   && apt-get -y autoremove \
   ## Admin-based install of TinyTeX
   && CTAN_REPO_ORIG=${CTAN_REPO} \
-  && CTAN_REPO=${CTAN_REPO_BUILD_LATEST:-$CTAN_REPO} \
-  && export CTAN_REPO \
+  && if [ "${CTAN_REPO}" = "https://mirror.ctan.org/systems/texlive/tlnet" ]; then \
+    CTAN_REPO=${CTAN_REPO_BUILD:-$CTAN_REPO}; \
+    export CTAN_REPO; \
+  fi \
   && wget -qO- "https://yihui.org/tinytex/install-unx.sh" \
     | sh -s - --admin --no-path \
   && mv ${HOME}/.TinyTeX /opt/TinyTeX \
