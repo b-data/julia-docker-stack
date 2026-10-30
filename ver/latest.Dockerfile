@@ -60,11 +60,16 @@ RUN apt-get update \
     liblapack-dev \
     ${BLAS} \
     libreadline-dev \
+    libsqlite3-dev \
     locales \
     netbase \
     tzdata \
     unzip \
     zip \
+  && if ([ "${BASE_IMAGE%:*}" = "debian" ] && dpkg --compare-versions "${BASE_IMAGE#*:}" ge "13") \
+    || ([ "${BASE_IMAGE%:*}" = "ubuntu" ] && dpkg --compare-versions "${BASE_IMAGE#*:}" ge "26"); then \
+    apt-get install -y --no-install-recommends libmpdec-dev; \
+  fi \
   ## Update locale
   && sed -i "s/# $LANG/$LANG/g" /etc/locale.gen \
   && locale-gen \
